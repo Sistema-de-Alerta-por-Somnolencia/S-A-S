@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma Logística PIS2</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>PIS2 <span>Logística</span></h2>
+        </div>
+        <ul class="nav-links">
+            <li class="active"><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#"><i class="fas fa-truck"></i> Flota</a></li>
+            <li><a href="#"><i class="fas fa-users"></i> Choferes</a></li>
+            <li><a href="#"><i class="fas fa-map-marked-alt"></i> Mapa en vivo</a></li>
+            <li><a href="#"><i class="fas fa-exclamation-triangle"></i> Alertas</a></li>
+            <li><a href="#"><i class="fas fa-tools"></i> Mantenimiento</a></li>
+        </ul>
+        <div class="theme-toggle">
+            <button id="theme-btn"><i class="fas fa-moon"></i> Modo Noche</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-title">
+                <h1>Dashboard de Camiones en Tiempo Real</h1>
+            </div>
+            <div class="topbar-actions">
+                <span class="stat-badge">Activos: 42/50</span>
+                <div class="notification">
+                    <i class="fas fa-bell"></i>
+                    <span class="badge">3</span>
+                </div>
+                <div class="user-profile">
+                    <img src="https://ui-avatars.com/api/?name=Alejandro+P&background=random" alt="User">
+                    <span>Alejandro</span>
+                </div>
+            </div>
+        </header>
+
+        <section class="top-section">
+            <div class="panel map-panel">
+                <h3><i class="fas fa-map"></i> Ubicación Global</h3>
+                <div class="map-placeholder">
+                    <div class="mock-map">
+                        <div class="mock-truck green" style="top: 30%; left: 40%;" title="TRK-004"></div>
+                        <div class="mock-truck orange" style="top: 50%; left: 60%;"></div>
+                        <div class="mock-truck red" style="top: 70%; left: 30%;"></div>
+                        
+                        <div class="mock-popup" style="top: 20%; left: 42%;">
+                            <strong>TRK-004</strong><br>
+                            Chofer: Roberto M.<br>
+                            Vel: 85 km/h<br>
+                            Destino: CEDIS Norte
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel list-panel">
+                <h3>Lista de Camiones</h3>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Placa</th>
+                                <th>Estado</th>
+                                <th>Velocidad</th>
+                                <th>Combustible</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>TRK-001</td>
+                                <td>ABC-123</td>
+                                <td><span class="status-badge green">Activo</span></td>
+                                <td>85 km/h</td>
+                                <td>62%</td>
+                            </tr>
+                            <tr>
+                                <td>TRK-002</td>
+                                <td>XYZ-987</td>
+                                <td><span class="status-badge orange">Aviso</span></td>
+                                <td>110 km/h</td>
+                                <td>40%</td>
+                            </tr>
+                            <tr>
+                                <td>TRK-004</td>
+                                <td>LMN-456</td>
+                                <td><span class="status-badge red">Crítico</span></td>
+                                <td>0 km/h</td>
+                                <td>10%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="bottom-section">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <i class="fas fa-truck-moving icon-green"></i>
+                    <div class="kpi-info">
+                        <h4>Camiones Activos</h4>
+                        <h2>42</h2>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <i class="fas fa-exclamation-circle icon-red"></i>
+                    <div class="kpi-info">
+                        <h4>Alertas Críticas</h4>
+                        <h2>3</h2>
+                    </div>
+                </div>
+                <div class="kpi-card">
+                    <i class="fas fa-wrench icon-orange"></i>
+                    <div class="kpi-info">
+                        <h4>Mantenimiento</h4>
+                        <h2>5</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="panel alerts-panel">
+                <h3>Alertas Recientes</h3>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td><i class="fas fa-circle icon-orange"></i> 10:42 AM</td>
+                            <td>TRK-002</td>
+                            <td>Exceso de velocidad detectado</td>
+                        </tr>
+                        <tr>
+                            <td><i class="fas fa-circle icon-red"></i> 09:15 AM</td>
+                            <td>TRK-004</td>
+                            <td>Nivel de combustible crítico</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const themeBtn = document.getElementById('theme-btn');
+        const htmlElement = document.documentElement;
+
+        themeBtn.addEventListener('click', () => {
+            if (htmlElement.getAttribute('data-theme') === 'light') {
+                htmlElement.setAttribute('data-theme', 'dark');
+                themeBtn.innerHTML = '<i class="fas fa-sun"></i> Modo Día';
+            } else {
+                htmlElement.setAttribute('data-theme', 'light');
+                themeBtn.innerHTML = '<i class="fas fa-moon"></i> Modo Noche';
+            }
+        });
+    </script>
+</body>
+</html>
