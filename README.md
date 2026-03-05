@@ -17,33 +17,33 @@ El sistema hace uso de **dos enfoques principales de redes neuronales** trabajan
 2.  **Red de Detección de Objetos:** Un modelo entrenado para identificar elementos de riesgo que violen las políticas de seguridad dentro del vehículo, identificando específicamente la presencia de armas y cigarros.
 
 ## Dependencias de Python
-[cite_start]El módulo de visión por computadora y análisis de datos requiere las siguientes librerías[cite: 1]:
-* [cite_start]`absl-py==2.4.0` [cite: 1]
-* [cite_start]`attrs==25.4.0` [cite: 1]
-* [cite_start]`cffi==2.0.0` [cite: 1]
-* [cite_start]`contourpy==1.3.3` [cite: 1]
-* [cite_start]`cycler==0.12.1` [cite: 1]
-* [cite_start]`flatbuffers==25.12.19` [cite: 1]
-* [cite_start]`fonttools==4.61.1` [cite: 1]
-* [cite_start]`kiwisolver==1.4.9` [cite: 1]
-* [cite_start]`matplotlib==3.10.8` [cite: 1]
-* [cite_start]`mediapipe==0.10.9` [cite: 1]
-* [cite_start]`numpy==2.4.2` [cite: 1]
-* [cite_start]`opencv-contrib-python==4.13.0.92` [cite: 1]
-* [cite_start]`opencv-python==4.11.0.86` [cite: 1]
-* [cite_start]`packaging==26.0` [cite: 1]
-* [cite_start]`pillow==12.1.1` [cite: 1]
-* [cite_start]`protobuf==3.20.3` [cite: 1]
-* [cite_start]`pycparser==3.0` [cite: 1]
-* [cite_start]`pyparsing==3.3.2` [cite: 1]
-* [cite_start]`python-dateutil==2.9.0.post0` [cite: 1]
-* [cite_start]`six==1.17.0` [cite: 1]
-* [cite_start]`sounddevice==0.5.5` [cite: 1]
+El módulo de visión por computadora requiere las siguientes librerías:
+* absl-py==2.4.0
+* attrs==25.4.0
+* cffi==2.0.0
+* contourpy==1.3.3
+* cycler==0.12.1
+* flatbuffers==25.12.19
+* fonttools==4.61.1
+* kiwisolver==1.4.9
+* matplotlib==3.10.8
+* mediapipe==0.10.9
+* numpy==2.4.2
+* opencv-contrib-python==4.13.0.92
+* opencv-python==4.11.0.86
+* packaging==26.0
+* pillow==12.1.1
+* protobuf==3.20.3
+* pycparser==3.0
+* pyparsing==3.3.2
+* python-dateutil==2.9.0.post0
+* six==1.17.0
+* sounddevice==0.5.5
 
 ## Instrucciones de Ejecución
 
 ### 1. Requisitos Previos
-* Python 3.8 o superior instalado.
+* Python 3.11.
 * Node.js instalado.
 * PostgreSQL instalado y configurado en tu entorno local.
 
