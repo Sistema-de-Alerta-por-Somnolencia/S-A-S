@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,11 +8,12 @@
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 
     <aside class="sidebar">
         <div class="sidebar-header">
-            <h2>PIS2 <span>Logística</span></h2>
+            <h2>Interfaz <span>Logística</span></h2>
         </div>
         <ul class="nav-links">
             <li class="active"><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
@@ -29,7 +31,7 @@
     <main class="main-content">
         <header class="topbar">
             <div class="topbar-title">
-                <h1>Dashboard de Camiones en Tiempo Real</h1>
+                <h1>Dashboard en Tiempo Real</h1>
             </div>
             <div class="topbar-actions">
                 <span class="stat-badge">Activos: 42/50</span>
@@ -52,7 +54,7 @@
                         <div class="mock-truck green" style="top: 30%; left: 40%;" title="TRK-004"></div>
                         <div class="mock-truck orange" style="top: 50%; left: 60%;"></div>
                         <div class="mock-truck red" style="top: 70%; left: 30%;"></div>
-                        
+
                         <div class="mock-popup" style="top: 20%; left: 42%;">
                             <strong>TRK-004</strong><br>
                             Chofer: Roberto M.<br>
@@ -133,16 +135,23 @@
                 <h3>Alertas Recientes</h3>
                 <table>
                     <tbody>
-                        <tr>
-                            <td><i class="fas fa-circle icon-orange"></i> 10:42 AM</td>
-                            <td>TRK-002</td>
-                            <td>Exceso de velocidad detectado</td>
-                        </tr>
-                        <tr>
-                            <td><i class="fas fa-circle icon-red"></i> 09:15 AM</td>
-                            <td>TRK-004</td>
-                            <td>Nivel de combustible crítico</td>
-                        </tr>
+                        <ul id="alarta_nueva">
+                            <tr>
+                                <td><i class="fas fa-circle icon-orange"></i> 10:42 AM</td>
+                                <td>TRK-002</td>
+                                <td>Exceso de velocidad detectado</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-circle icon-red"></i> 09:15 AM</td>
+                                <td>TRK-004</td>
+                                <td>Nivel de combustible crítico</td>
+                            </tr>
+                            <tr>
+                                <td><i class="fas fa-circle icon-red"></i> 09:15 AM</td>
+                                <td>TRK-004</td>
+                                <td>Huachicoleo en progreso</td>
+                            </tr>
+                        </ul>
                     </tbody>
                 </table>
             </div>
@@ -164,4 +173,5 @@
         });
     </script>
 </body>
+
 </html>
