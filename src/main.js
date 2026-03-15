@@ -14,7 +14,11 @@ const PORT = process.env.PORT || 3000;
 
 import { ejecutarScriptPython } from './python/pythonApi.js';
 
-import authRoutes from './routes/authRoutes.js';
+import apiRoutes from './routes/index.js';
+
+// ... configuraciones ...
+
+app.use('/api', apiRoutes);
 
 // NUEVO (Diego): Importa las rutas donde se van a encontrar los json
 import marcasRoutes from "./routes/marcas.js";
@@ -57,6 +61,7 @@ app.use(cors());
 app.use(express.json())
 
 // NUEVO (Diego): Registra las rutas de la base de datos (Ej: http://localhost:3000/api/unidades)
+/*
 app.use("/api/marcas", marcasRoutes);
 app.use("/api/modelos", modelosRoutes);
 app.use("/api/choferes", choferesRoutes);
@@ -66,6 +71,9 @@ app.use("/api/tipos_alerta", tiposAlertasRoutes);
 app.use("/api/alertas_db", alertasRoutes);
 
 app.use('/api', authRoutes);
+app.use('/api', adminRoutes);
+*/
+
 
 // NUEVO (Diego): Servidor de archivos estáticos para mi frontend anterior
 app.use('/dashboard', express.static(path.join(__dirname, 'public/dashboard')));
