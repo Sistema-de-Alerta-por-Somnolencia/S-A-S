@@ -9,7 +9,7 @@ const { ejecutarScriptPython } = require('./python/pythonApi.js');
 
 // Esta madre se descomenta antes de la presentacion loko
 
-/*
+
 const iniciarApp = async () => {
   console.log("Iniciando sistema...");
 
@@ -28,7 +28,7 @@ const iniciarApp = async () => {
 };
 
 iniciarApp();
-*/
+
 
 // asi tendremos un middleware
 app.use(express.json())
