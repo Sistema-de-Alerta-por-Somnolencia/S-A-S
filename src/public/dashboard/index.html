@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Dashboard Sistema de Alertas</title>
+
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<h1>Sistema de Monitoreo de Conductores</h1>
+
+
+<h2>Registrar Marca</h2>
+
+<form id="formMarca">
+
+<input
+type="text"
+id="nombre_marca"
+placeholder="Nombre de marca"
+required
+>
+
+<button type="submit">Guardar</button>
+
+</form>
+
+
+
+<h2>Registrar Modelo</h2>
+
+<form id="formModelo">
+
+<input
+type="text"
+id="nombre_modelo"
+placeholder="Nombre modelo"
+required
+>
+
+<select id="selectMarca"></select>
+
+<button type="submit">Guardar</button>
+
+</form>
+
+
+
+<h2>Registrar Chofer</h2>
+
+<form id="formChofer">
+
+<input type="text" id="nombre" placeholder="Nombre" required>
+
+<input type="text" id="apellido_paterno" placeholder="Apellido paterno" required>
+
+<input type="text" id="apellido_materno" placeholder="Apellido materno">
+
+<input type="text" id="licencia" placeholder="Licencia" required>
+
+<input type="text" id="telefono" placeholder="Telefono">
+
+<input type="email" id="email" placeholder="Email">
+
+<button type="submit">Guardar</button>
+
+</form>
+
+
+
+<h2>Registrar Unidad</h2>
+
+<form id="formUnidad">
+
+<input type="text" id="placa" placeholder="Placa" required>
+
+<input type="number" id="anio" placeholder="Año">
+
+<select id="selectChofer"></select>
+
+<select id="selectModelo"></select>
+
+<button type="submit">Guardar</button>
+
+</form>
+
+
+
+<h2>Registrar Tipo de Alerta</h2>
+
+<form id="formTipoAlerta">
+
+<input
+type="text"
+id="nombre_alerta"
+placeholder="Nombre alerta"
+required
+>
+
+<button type="submit">Guardar</button>
+
+</form>
+
+
+
+<h2>Registrar Alerta</h2>
+
+<form id="formAlerta">
+
+<select id="selectTipoAlerta"></select>
+
+<select id="selectUnidad"></select>
+
+<button type="submit">Guardar</button>
+
+</form>
+
+
+
+<h2>Alertas registradas</h2>
+
+<button onclick="cargarAlertas()">
+Actualizar alertas
+</button>
+
+<ul id="listaAlertas"></ul>
+
+
+
+<script src="dashboard.js"></script>
+
+</body>
+
+</html>

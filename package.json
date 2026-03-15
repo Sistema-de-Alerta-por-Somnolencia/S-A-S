@@ -1,19 +1,21 @@
 {
-  "name": "web",
+  "name": "sas-sistema-integrado",
   "version": "1.0.0",
-  "description": "",
-  "main": "principal.html",
+  "description": "Sistema de detección de somnolencia y gestión de unidades",
+  "main": "src/main.js",
+  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon src/main.js",
     "start": "node src/main.js"
   },
   "keywords": [],
-  "author": "Alejandro Vaca",
+  "author": "Alejandro Vaca / Diego",
   "license": "ISC",
   "packageManager": "pnpm@10.15.1",
   "dependencies": {
     "bcrypt": "6.0.0",
+    "cors": "^2.8.5",
     "dotenv": "17.3.1",
     "express": "5.2.1",
     "pg": "8.20.0"

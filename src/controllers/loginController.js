@@ -1,5 +1,5 @@
 
-import { query } from '/Users/bakaa/Documents/PIS 2/Proyecto final/webVisualizacion/src/db/pool.js';
+import { query } from '../db/pool.js';
 import bcrypt, { hash } from 'bcrypt'
 // Con esta biblioteca hasheamos la contraseña
 

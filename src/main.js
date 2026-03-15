@@ -1,6 +1,6 @@
 import express from 'express';
 import path from 'path';
-
+import cors from 'cors'; // NUEVO (Diego): Importa CORS para permitir peticiones desde otros dominios
 import { fileURLToPath } from 'url';
 
 // Recreamos __filename y __dirname para ES Modules
@@ -16,7 +16,14 @@ import { ejecutarScriptPython } from './python/pythonApi.js';
 
 import authRoutes from './routes/authRoutes.js';
 
-
+// NUEVO (Diego): Importa las rutas donde se van a encontrar los json
+import marcasRoutes from "./routes/marcas.js";
+import modelosRoutes from "./routes/modelos.js";
+import choferesRoutes from "./routes/choferes.js";
+import administradoresRoutes from "./routes/administradores.js";
+import unidadesRoutes from "./routes/unidades.js";
+import tiposAlertasRoutes from "./routes/tipos_alerta.js";
+import alertasRoutes from "./routes/alertas_db.js";
 
 
 // Esta madre se descomenta antes de la presentacion loko
@@ -43,10 +50,26 @@ const iniciarApp = async () => {
 iniciarApp();
 */
 
+// NUEVO (Diego): Habilita CORS (permite que el frontend acceda a la API)
+app.use(cors());
+
 // asi tendremos un middleware
 app.use(express.json())
 
+// NUEVO (Diego): Registra las rutas de la base de datos (Ej: http://localhost:3000/api/unidades)
+app.use("/api/marcas", marcasRoutes);
+app.use("/api/modelos", modelosRoutes);
+app.use("/api/choferes", choferesRoutes);
+app.use("/api/administradores", administradoresRoutes);
+app.use("/api/unidades", unidadesRoutes);
+app.use("/api/tipos_alerta", tiposAlertasRoutes);
+app.use("/api/alertas_db", alertasRoutes);
+
 app.use('/api', authRoutes);
+
+// NUEVO (Diego): Servidor de archivos estáticos para mi frontend anterior
+app.use('/dashboard', express.static(path.join(__dirname, 'public/dashboard')));
+
 app.use(express.static(path.join(__dirname, 'public')));
 // Servir archivos estáticos automáticamente y ocultar la extensión .html en la URL
 app.use(express.static(path.join(__dirname, 'views'), {
@@ -96,5 +119,6 @@ app.post('/api/alertas', (req, res) => {
 });
 
 app.listen(PORT, () => {
+  // NUEVO (Diego): Mensaje modificado para confirmar que el servidor levantó con la fusión
   console.log(`Servidor levantado en puerto http://localhost:${PORT}`);
 })

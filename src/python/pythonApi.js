@@ -1,10 +1,16 @@
-// Archivo: services/pythonRunner.js
-const { spawn } = require('child_process');
+// Archivo: src/python/pythonApi.js
 
-const ejecutarScriptPython = () => {
+// NUEVO (Diego): Se cambió 'require' por 'import' para que sea compatible con "type": "module"
+import { spawn } from 'child_process'; 
+
+// NUEVO (Diego): Se agregó 'export' al inicio para que main.js pueda encontrar la función
+export const ejecutarScriptPython = () => {
     return new Promise((resolve, reject) => {
         // Rutas (ajusta según tu SO)
-        const pythonPath = './.venv/bin/python';
+        
+        // NUEVO (Diego): Se actualizó la ruta al ejecutable de Python para Windows (.\venv\Scripts\python.exe)
+        // El original era './.venv/bin/python' (Linux/Mac)
+        const pythonPath = './venv/Scripts/python.exe'; 
         const scriptPath = './src/python/vision-dormido.py';
 
 
@@ -32,5 +38,5 @@ const ejecutarScriptPython = () => {
     });
 };
 
-// Exportamos la función para poder usarla en otro lado
-module.exports = { ejecutarScriptPython };
+// NUEVO (Diego): Se eliminó 'module.exports' ya que no es compatible con el sistema de módulos actual (import/export)
+// La función ya se exporta arriba directamente con 'export const'

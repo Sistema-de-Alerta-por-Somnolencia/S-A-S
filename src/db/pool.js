@@ -6,8 +6,10 @@ dotenv.config();
 
 
 const pool = new Pool({
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
+    // Cambiamos POSTGRES_USER por DB_USER para que lea mi .env
+    user: process.env.DB_USER, 
+    // Cambiamos POSTGRES_PASSWORD por DB_PASSWORD para que lea mi .env
+    password: process.env.DB_PASSWORD, 
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
     database: process.env.DB_NAME,
