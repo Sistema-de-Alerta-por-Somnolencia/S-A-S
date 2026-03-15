@@ -16,9 +16,7 @@ import { ejecutarScriptPython } from './python/pythonApi.js';
 
 import apiRoutes from './routes/index.js';
 
-// Todo lo que creaste aqui diego lo pase a Index.js SRP
 
-app.use('/api', apiRoutes);
 
 
 
@@ -53,7 +51,9 @@ app.use(cors());
 app.use(express.json())
 
 
+// Todo lo que creaste aqui diego lo pase a Index.js SRP
 
+app.use('/api', apiRoutes);
 
 // NUEVO (Diego): Servidor de archivos estáticos para mi frontend anterior
 app.use('/dashboard', express.static(path.join(__dirname, 'public/dashboard')));
