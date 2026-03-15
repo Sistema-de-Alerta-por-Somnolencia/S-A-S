@@ -21,3 +21,11 @@ export const query = (text, params) => {
 export const getClient = () => {
     return pool.connect()
 }
+
+pool.query('SELECT NOW()', (err, res) => {
+    if (err) {
+        console.error('❌ Error conectando a PostgreSQL. Revisa tu archivo .env:', err.stack);
+    } else {
+        console.log('✅ ¡Conexión exitosa a PostgreSQL! Hora de la BD:', res.rows[0].now);
+    }
+});

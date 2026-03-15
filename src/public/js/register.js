@@ -1,22 +1,19 @@
 document.getElementById('register-form').addEventListener('submit', async function (event) {
     event.preventDefault();
 
-    // Asegúrate de crear este elemento en tu HTML
     const messageElement = document.getElementById('responseMessage');
 
-    // Extraemos los valores usando los IDs reales de tu newCuenta.html
+    // 1. Extraemos los valores usando los IDs EXACTOS de tu HTML
     const name = document.getElementById('firstname-input').value;
-    const lastname = document.getElementById('lastname-input').value; // Falta crearlo en el HTML
+    const lastname = document.getElementById('lastname-input').value;
     const email = document.getElementById('email-input').value;
+    const password = document.getElementById('password-input').value;
+    const passwordAgain = document.getElementById('password-input-again').value;
 
-    // Corregí el cruce de nombres basado en tu HTML actual
-    const password = document.getElementById('password-input-again').value;
-    const passwordAgain = document.getElementById('password-input').value;
-
-    // Validación simplificada
+    // Validación
     if (password !== passwordAgain) {
         alert('Las contraseñas no son iguales.');
-        return; // Detiene el envío
+        return;
     }
 
     try {
@@ -25,6 +22,7 @@ document.getElementById('register-form').addEventListener('submit', async functi
             headers: {
                 'Content-Type': 'application/json'
             },
+
             body: JSON.stringify({ name: name, lastname: lastname, email: email, password: password })
         });
 
@@ -37,8 +35,6 @@ document.getElementById('register-form').addEventListener('submit', async functi
             localStorage.setItem('userID', data.userID);
             localStorage.setItem('username', data.username);
 
-            // Te sugiero corregir el nombre del archivo si es necesario, 
-            // en tu HTML mencionaste "cuentaExistente.html" sin el guión bajo
             window.location.href = 'cuentaExistente.html';
         } else {
             messageElement.textContent = `Error: ${data.error}`;

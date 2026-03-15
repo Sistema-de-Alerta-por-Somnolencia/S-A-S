@@ -1,5 +1,8 @@
 
 import { query } from '/Users/bakaa/Documents/PIS 2/Proyecto final/webVisualizacion/src/db/pool.js';
+import bcrypt, { hash } from 'bcrypt'
+// Con esta biblioteca hasheamos la contraseña
+
 
 if (query) {
     console.log("Query cargada correctamente del pool")
@@ -8,8 +11,9 @@ export const login = async (req, res) => {
     const { email, password } = req.body
 
     try {
-        const text = 'SELECT id, email FROM usuarios WHERE email = $1 AND password = $2';
-        const params = [email, password];
+
+        const text = 'SELECT id, email, password FROM usuarios WHERE email = $1';
+        const params = [email];
 
         const result = await query(text, params)
 
@@ -18,14 +22,18 @@ export const login = async (req, res) => {
             return res.status(401).json({ error: 'Credenciales invalidas' });
 
         }
-        else {
-            const user = result.rows[0]
-            return res.status(200).json({
-                message: 'Login exitoso',
-                userID: user.id,
-                username: user.email
-            })
+        const user = result.rows[0];
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+            console.log("Error comparando contraseña y hash")
+            return res.status(401).json({ error: 'Credenciales invalidas' });
         }
+
+        return res.status(200).json({
+            message: 'Login exitoso',
+            userID: user.id,
+            username: user.email
+        });
     } catch (err) {
         console.error("Error durante el login", err.stack); // Usar console.error
 
@@ -46,17 +54,22 @@ export const register = async (req, res) => {
     }
 
     try {
+        const saltRound = 10;
+
+        const hashPassword = await bcrypt.hash(password, saltRound);
 
         const text = `
-            INSERT INTO credentials (name, lastname, email, password)
+            INSERT INTO usuarios (nombre, lastname, email, password)
             VALUES ($1, $2, $3, $4)
             RETURNING id, email; 
         `;
         // crear el array de parámetros
-        const params = [name, lastname, email, password];
+        const params = [name, lastname, email, hashPassword];
+
 
         // ejecutar la consulta
         const result = await query(text, params);
+        console.log(text);
 
         // la insercion fue exitosa. retornamos los datos del nuevo usuario.
         // asumiendo que RETURNING devolvio una fila (rows[0])
