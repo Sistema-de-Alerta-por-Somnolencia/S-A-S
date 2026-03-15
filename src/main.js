@@ -16,18 +16,10 @@ import { ejecutarScriptPython } from './python/pythonApi.js';
 
 import apiRoutes from './routes/index.js';
 
-// ... configuraciones ...
+// Todo lo que creaste aqui diego lo pase a Index.js SRP
 
 app.use('/api', apiRoutes);
 
-// NUEVO (Diego): Importa las rutas donde se van a encontrar los json
-import marcasRoutes from "./routes/marcas.js";
-import modelosRoutes from "./routes/modelos.js";
-import choferesRoutes from "./routes/choferes.js";
-import administradoresRoutes from "./routes/administradores.js";
-import unidadesRoutes from "./routes/unidades.js";
-import tiposAlertasRoutes from "./routes/tipos_alerta.js";
-import alertasRoutes from "./routes/alertas_db.js";
 
 
 // Esta madre se descomenta antes de la presentacion loko
@@ -60,19 +52,7 @@ app.use(cors());
 // asi tendremos un middleware
 app.use(express.json())
 
-// NUEVO (Diego): Registra las rutas de la base de datos (Ej: http://localhost:3000/api/unidades)
-/*
-app.use("/api/marcas", marcasRoutes);
-app.use("/api/modelos", modelosRoutes);
-app.use("/api/choferes", choferesRoutes);
-app.use("/api/administradores", administradoresRoutes);
-app.use("/api/unidades", unidadesRoutes);
-app.use("/api/tipos_alerta", tiposAlertasRoutes);
-app.use("/api/alertas_db", alertasRoutes);
 
-app.use('/api', authRoutes);
-app.use('/api', adminRoutes);
-*/
 
 
 // NUEVO (Diego): Servidor de archivos estáticos para mi frontend anterior

@@ -27,8 +27,8 @@ export const getClient = () => {
 
 pool.query('SELECT NOW()', (err, res) => {
     if (err) {
-        console.error('❌ Error conectando a PostgreSQL. Revisa tu archivo .env:', err.stack);
+        console.error('Error conectando a PostgreSQL. Revisa tu archivo .env:', err.stack);
     } else {
-        console.log('✅ ¡Conexión exitosa a PostgreSQL! Hora de la BD:', res.rows[0].now);
+        console.log('¡Conexión exitosa a PostgreSQL! Hora de la BD:', res.rows[0].now);
     }
 });

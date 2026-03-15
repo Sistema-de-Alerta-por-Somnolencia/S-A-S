@@ -1,4 +1,7 @@
 import { query } from '../db/pool.js';
+import { Router } from "express";
+
+const router = Router();
 
 export const getChoferes = async (req, res) => {
     try {
@@ -24,3 +27,6 @@ export const createChofer = async (req, res) => {
         res.status(500).json({ error: "Error al registrar chofer" });
     }
 };
+
+
+export default router;
