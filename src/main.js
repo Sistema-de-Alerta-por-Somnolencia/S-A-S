@@ -27,20 +27,26 @@ const iniciarApp = async () => {
   }
 };
 
-iniciarApp();*/
-
+iniciarApp();
+*/
 
 // asi tendremos un middleware
 app.use(express.json())
 
-
 app.use(express.static(path.join(__dirname, 'public')));
+// Servir archivos estáticos automáticamente y ocultar la extensión .html en la URL
+app.use(express.static(path.join(__dirname, 'views'), {
+  extensions: ['html']
+}));
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'principal.html'));
+// Solo necesitas definir la ruta raíz ('/') manualmente
 
+app.get(['/', '/cuentaexistente'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'cuentaExistente.html'));
 });
-
+app.get('/newcuenta', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'newCuenta.html'));
+});
 // esta aun no la usare.
 app.get('/api/camiones', (req, res) => {
   // Más adelante, aquí harás la consulta a tu base de datos. 

@@ -1,17 +1,16 @@
 import cv2
 import mediapipe as mp
 import numpy as np
-import time
 from mediapipe.framework.formats import landmark_pb2
 import requests
 
 
-# Acceder a solutions via mp.solutions (funciona en 0.10.x)
+# Acceder a solutions via mp.solutions
 mp_drawing = mp.solutions.drawing_utils  # type: ignore
 mp_drawing_styles = mp.solutions.drawing_styles  # type: ignore
 mp_face_mesh = mp.solutions.face_mesh  # type: ignore
 
-# --- 1. CONFIGURACIÓN DEL MODELO ---
+# CONFIGURACIÓN DEL MODELO
 # Asegúrate de que 'face_landmarker.task' esté en la carpeta
 model_path = "face_landmarker.task"
 
@@ -37,8 +36,10 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     for face_landmarks in face_landmarks_list:
         # --- ARREGLO 1: Conversión de Formato (Evita que se cierre al detectar cara) ---
         face_landmarks_proto = landmark_pb2.NormalizedLandmarkList()  # type: ignore
+        face_landmarks_proto = landmark_pb2.NormalizedLandmarkList()  # type: ignore
         face_landmarks_proto.landmark.extend(
             [
+                landmark_pb2.NormalizedLandmark(  # type: ignore
                 landmark_pb2.NormalizedLandmark(  # type: ignore
                     x=landmark.x, y=landmark.y, z=landmark.z
                 )
@@ -67,7 +68,7 @@ def draw_landmarks_on_image(rgb_image, detection_result):
     return annotated_image
 
 
-# --- 3. BUCLE PRINCIPAL (MAIN LOOP) ---
+# BUCLE PRINCIPAL
 def main():
     # voy a usar estas variables para el tiempo
     tiempo_inicio_ojos_cerrados = None
@@ -78,7 +79,7 @@ def main():
     ojo_cerrado_Derecho = 0.0
     boca_abierta = 0.0
 
-    # Inicializar la cámara (0 suele ser la webcam por defecto)
+    # Inicializar la camara (0 suele ser la webcam por defecto)
     cap = cv2.VideoCapture(1)
 
     # Crear el detector dentro de un bloque 'with' para asegurar que se cierre bien
@@ -201,7 +202,7 @@ def main():
 
             # Mostrar en ventana
             # cambiar bgr por 'frame' cuando quiera dejar de mostrar la malla y solo el texto
-            cv2.imshow("Detector de Sueño UAM", frame)
+            cv2.imshow("Detector de Sueño UAM", bgr_annotated_image)
 
             # Salir con 'q'
             if cv2.waitKey(1) & 0xFF == ord("q"):
