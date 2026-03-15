@@ -1,14 +1,26 @@
-const express = require('express')
-const path = require('path');
+import express from 'express';
+import path from 'path';
+
+import { fileURLToPath } from 'url';
+
+// Recreamos __filename y __dirname para ES Modules
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 
 const app = express()
 const PORT = process.env.PORT || 3000;
 
-const { ejecutarScriptPython } = require('./python/pythonApi.js');
+
+import { ejecutarScriptPython } from './python/pythonApi.js';
+
+import authRoutes from './routes/authRoutes.js';
 
 
+app.use('/api', authRoutes);
 // Esta madre se descomenta antes de la presentacion loko
 
+/*
 
 const iniciarApp = async () => {
   console.log("Iniciando sistema...");
@@ -28,7 +40,7 @@ const iniciarApp = async () => {
 };
 
 iniciarApp();
-
+*/
 
 // asi tendremos un middleware
 app.use(express.json())
@@ -59,6 +71,8 @@ app.get('/api/camiones', (req, res) => {
 
   res.json(camionesMock);
 });
+
+
 
 // Ruta POST para recibir las alertas desde los camiones (o desde Postman)
 app.post('/api/alertas', (req, res) => {

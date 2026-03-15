@@ -2,7 +2,7 @@
 
 :root {
   --accent-color: #0b507a;
-  --base-color: rgb(255, 255, 255);
+  --base-color: rgb(44, 43, 43);
   --text-color: #67a0f5;
   --input-color: #ffffff;
 }
@@ -22,7 +22,7 @@ html {
 body {
   min-height: 100vh;
   /* background: linear-gradient(135deg, #0b507a 0%, #e0e0e0 100%); */
-  background-color: #f0f2f5;
+  background-color: #111111;
   /* Fallback color */
   overflow: hidden;
   position: relative;
@@ -37,7 +37,7 @@ body::before {
   bottom: 0;
   width: 60%;
   /* Adjust width as needed, covers right side */
-  background-image: url(/img/login_bg_map.png);
+  background-image: url(/img/black.jpg);
   background-size: cover;
   /* Covers the 60% width area, less zoom than full screen */
   background-position: center;
