@@ -4,13 +4,12 @@ import numpy as np
 import time
 from mediapipe.framework.formats import landmark_pb2
 import requests
-import time  # con esta biblioteca sabre cuanto tiempo tuvo los ojos cerrados la persona
 
 
 # Acceder a solutions via mp.solutions (funciona en 0.10.x)
-mp_drawing = mp.solutions.drawing_utils
-mp_drawing_styles = mp.solutions.drawing_styles
-mp_face_mesh = mp.solutions.face_mesh
+mp_drawing = mp.solutions.drawing_utils  # type: ignore
+mp_drawing_styles = mp.solutions.drawing_styles  # type: ignore
+mp_face_mesh = mp.solutions.face_mesh  # type: ignore
 
 # --- 1. CONFIGURACIÓN DEL MODELO ---
 # Asegúrate de que 'face_landmarker.task' esté en la carpeta
@@ -37,10 +36,10 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 
     for face_landmarks in face_landmarks_list:
         # --- ARREGLO 1: Conversión de Formato (Evita que se cierre al detectar cara) ---
-        face_landmarks_proto = landmark_pb2.NormalizedLandmarkList()
+        face_landmarks_proto = landmark_pb2.NormalizedLandmarkList()  # type: ignore
         face_landmarks_proto.landmark.extend(
             [
-                landmark_pb2.NormalizedLandmark(
+                landmark_pb2.NormalizedLandmark(  # type: ignore
                     x=landmark.x, y=landmark.y, z=landmark.z
                 )
                 for landmark in face_landmarks
@@ -150,7 +149,7 @@ def main():
                         boca_abierta = blendshape.score
 
                 if ojo_cerrado_Izquierdo > 0.500 and ojo_cerrado_Derecho > 0.500:
-                    ojosCerrados = True
+                    # ojosCerrados = True
                     texto_en_pantalla = "       Zzzzz.."
                     color_text = (0, 0, 255)  # color rojo
 
