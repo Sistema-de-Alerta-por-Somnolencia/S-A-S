@@ -23,7 +23,12 @@ document.getElementById('register-form').addEventListener('submit', async functi
                 'Content-Type': 'application/json'
             },
 
-            body: JSON.stringify({ name: name, lastname: lastname, email: email, password: password })
+            body: JSON.stringify({ 
+                name: name, 
+                lastname: lastname, // Se enviará como apellido_paterno
+                email: email, 
+                password: password 
+            })
         });
 
         const data = await response.json();
