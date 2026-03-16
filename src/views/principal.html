@@ -7,6 +7,7 @@
     <title>Plataforma Logística PIS2</title>
     <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
 </head>
 
 <body>
@@ -18,7 +19,7 @@
         <ul class="nav-links">
             <li class="active"><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
             <li><a href="#"><i class="fas fa-truck"></i> Flota</a></li>
-            <li><a href="#"><i class="fas fa-users"></i> Choferes</a></li>
+            <li><a href="choferes.html"><i class="fas fa-users"></i> Choferes</a></li>
             <li><a href="#"><i class="fas fa-map-marked-alt"></i> Mapa en vivo</a></li>
             <li><a href="#"><i class="fas fa-exclamation-triangle"></i> Alertas</a></li>
             <li><a href="#"><i class="fas fa-tools"></i> Mantenimiento</a></li>
@@ -159,19 +160,39 @@
     </main>
 
     <script>
-        const themeBtn = document.getElementById('theme-btn');
-        const htmlElement = document.documentElement;
+    const themeBtn = document.getElementById('theme-btn');
+    const htmlElement = document.documentElement;
 
-        themeBtn.addEventListener('click', () => {
-            if (htmlElement.getAttribute('data-theme') === 'light') {
-                htmlElement.setAttribute('data-theme', 'dark');
-                themeBtn.innerHTML = '<i class="fas fa-sun"></i> Modo Día';
-            } else {
-                htmlElement.setAttribute('data-theme', 'light');
-                themeBtn.innerHTML = '<i class="fas fa-moon"></i> Modo Noche';
-            }
-        });
-    </script>
+    // 1. Al cargar la página: Leer la "memoria" del navegador
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    // 2. Aplicar el tema guardado de inmediato
+    htmlElement.setAttribute('data-theme', savedTheme);
+    actualizarBoton(savedTheme);
+
+    // 3. Escuchar el clic para cambiar y GUARDAR el tema
+    themeBtn.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        // Aplicar visualmente
+        htmlElement.setAttribute('data-theme', newTheme);
+        
+        // Guardar en la libreta del navegador (esto es lo que comparte el color entre páginas)
+        localStorage.setItem('theme', newTheme);
+        
+        actualizarBoton(newTheme);
+    });
+
+    // Función auxiliar para que el texto del botón también coincida
+    function actualizarBoton(theme) {
+        if (theme === 'dark') {
+            themeBtn.innerHTML = '<i class="fas fa-sun"></i> Modo Día';
+        } else {
+            themeBtn.innerHTML = '<i class="fas fa-moon"></i> Modo Noche';
+        }
+    }
+</script>
 </body>
 
 </html>

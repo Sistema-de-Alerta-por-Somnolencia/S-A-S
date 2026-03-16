@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAS - Gestión de Choferes</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
+</head>
+<body>
+
+   <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>Interfaz <span>Logística</span></h2>
+        </div>
+        <ul class="nav-links">
+            <li><a href="/principal"><i class="fas fa-home"></i> Inicio</a></li>
+            <li><a href="#"><i class="fas fa-truck"></i> Flota</a></li>
+            <li class="active"><a href="/choferes"><i class="fas fa-users"></i> Choferes</a></li>
+            <li><a href="#"><i class="fas fa-map-marked-alt"></i> Mapa en vivo</a></li>
+            <li><a href="#"><i class="fas fa-exclamation-triangle"></i> Alertas</a></li>
+            <li><a href="#"><i class="fas fa-tools"></i> Mantenimiento</a></li>
+        </ul>
+        <div class="theme-toggle">
+            <button id="theme-btn"><i class="fas fa-moon"></i> Modo Noche</button>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="topbar">
+            <div class="topbar-title">
+                <h1>Gestión de Personal</h1>
+            </div>
+        </header>
+
+        <section class="form-section">
+            <div class="panel">
+                <h3><i class="fas fa-user-plus"></i> Registrar Nuevo Chofer</h3>
+                <form id="formRegistroChofer" class="dashboard-form">
+                    <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                        <div class="input-group">
+                            <label for="c_nombre">Nombre(s)</label>
+                            <input type="text" id="c_nombre" placeholder="Ej. Juan" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                        </div>
+                        <div class="input-group">
+                            <label for="c_paterno">Apellido Paterno</label>
+                            <input type="text" id="c_paterno" placeholder="Ej. Pérez" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                        </div>
+                        <div class="input-group">
+                            <label for="c_materno">Apellido Materno</label>
+                            <input type="text" id="c_materno" placeholder="Ej. Lopez" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                        </div>
+                        <div class="input-group">
+                            <label for="c_licencia">Licencia</label>
+                            <input type="text" id="c_licencia" placeholder="ABC12345" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                        </div>
+                        <div class="input-group">
+                            <label for="c_telefono">Teléfono</label>
+                            <input type="tel" id="c_telefono" placeholder="5512345678" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                        </div>
+                        <div class="input-group">
+                            <label for="c_email">Correo</label>
+                            <input type="email" id="c_email" placeholder="juan@correo.com" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary" style="margin-top: 20px; padding: 12px 25px; background: var(--accent-blue); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                        <i class="fas fa-save"></i> Guardar en Base de Datos
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <section class="table-section">
+            <div class="panel">
+                <h3><i class="fas fa-list"></i> Choferes Registrados</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nombre Completo</th>
+                                <th>Licencia</th>
+                                <th>Teléfono</th> <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tablaChoferes"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/choferes_logic.js"></script>
+
+    <script>
+    const themeBtn = document.getElementById('theme-btn');
+    const htmlElement = document.documentElement;
+
+    // 1. Al cargar la página: Leer la "memoria" del navegador
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    
+    // 2. Aplicar el tema guardado de inmediato
+    htmlElement.setAttribute('data-theme', savedTheme);
+    actualizarBoton(savedTheme);
+
+    // 3. Escuchar el clic para cambiar y GUARDAR el tema
+    themeBtn.addEventListener('click', () => {
+        const currentTheme = htmlElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        
+        // Aplicar visualmente
+        htmlElement.setAttribute('data-theme', newTheme);
+        
+        // Guardar en la libreta del navegador (esto es lo que comparte el color entre páginas)
+        localStorage.setItem('theme', newTheme);
+        
+        actualizarBoton(newTheme);
+    });
+
+    // Función auxiliar para que el texto del botón también coincida
+    function actualizarBoton(theme) {
+        if (theme === 'dark') {
+            themeBtn.innerHTML = '<i class="fas fa-sun"></i> Modo Día';
+        } else {
+            themeBtn.innerHTML = '<i class="fas fa-moon"></i> Modo Noche';
+        }
+    }
+</script>
+</body>
+</html>
