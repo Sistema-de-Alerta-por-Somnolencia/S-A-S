@@ -134,24 +134,10 @@
             <div class="panel alerts-panel">
                 <h3>Alertas Recientes</h3>
                 <table>
-                    <tbody>
-                        <ul id="alarta_nueva">
-                            <tr>
-                                <td><i class="fas fa-circle icon-orange"></i> 10:42 AM</td>
-                                <td>TRK-002</td>
-                                <td>Exceso de velocidad detectado</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-circle icon-red"></i> 09:15 AM</td>
-                                <td>TRK-004</td>
-                                <td>Nivel de combustible crítico</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-circle icon-red"></i> 09:15 AM</td>
-                                <td>TRK-004</td>
-                                <td>Huachicoleo en progreso</td>
-                            </tr>
-                        </ul>
+                    <tbody id="tabla_alertas">
+                        <tr>
+                            <td colspan="3">Cargando alertas...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -172,6 +158,7 @@
             }
         });
     </script>
+    <script src="/js/alertas.js"></script>
 </body>
 
 </html>
