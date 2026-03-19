@@ -8,11 +8,9 @@ document.getElementById("login-form").addEventListener('submit', async function 
     const password = document.getElementById('password-input').value;
 
     try {
-        const response = await fetch('http://localhost:3000/api/auth/login', {
+        const response = await fetch('/api/auth/login', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ email: email, password: password })
         });
 
@@ -23,7 +21,7 @@ document.getElementById("login-form").addEventListener('submit', async function 
             localStorage.setItem('userID', data.userID);
             localStorage.setItem('username', data.username);
 
-            window.location.href = 'principal.html';
+            window.location.href = '/principal';
         } else {
             messageElement.textContent = `Error: ${data.error}`;
             messageElement.style.color = 'red';
