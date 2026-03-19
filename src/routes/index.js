@@ -10,6 +10,7 @@ import alertasRoutes from './alertasRoutes.js';
 // Importamos el cadenero de API
 import { verificarSesionAPI } from '../middlewares/authMiddleware.js';
 
+
 const router = Router();
 
 
