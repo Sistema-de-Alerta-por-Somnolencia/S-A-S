@@ -2,9 +2,9 @@ import cv2
 import mediapipe as mp
 import numpy as np
 from mediapipe.framework.formats import landmark_pb2
-import requests
 import time  # con esta biblioteca sabre cuanto tiempo tuvo los ojos cerrados la persona
-from playsound import playsound
+
+from alertaFunction import hacer_sonar_alarma, enviar_json_camiones
 
 
 # Acceder a solutions via mp.solutions
@@ -177,7 +177,7 @@ def main():
                         }
                         enviar_json_camiones(datos_camion)
                         alerta_ya_enviada = True
-                        playsound("audio.mp3")
+                        hacer_sonar_alarma("src/public/img/alerta.wavpn")
                         # esta es la alerta sonora pq se yepete el conductor
 
                 else:
@@ -213,24 +213,7 @@ def main():
     cv2.destroyAllWindows()
 
 
-def enviar_json_camiones(datos_camion):
-    url_alerta = "http://localhost:3000/api/alertas"
-
-    # Usamos el middleware
-    headers = {"x-api-key": "clave_secreta_camion_123"}
-
-    try:
-        # Hacemos el POST directo con los headers, sin necesidad de login previo
-        response = requests.post(url_alerta, json=datos_camion, headers=headers)
-        response.raise_for_status()
-
-        print("Petición enviada con éxito:", response.status_code, flush=True)
-        return response.json()
-
-    except requests.exceptions.RequestException as e:
-        print(f"Error al conectar con la API: {e}", flush=True)
-        return None
-
+# llamamos a la funcion que manda el json al controller
 
 if __name__ == "__main__":
     main()
