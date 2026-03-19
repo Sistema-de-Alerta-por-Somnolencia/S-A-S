@@ -19,7 +19,7 @@ app.use(session({
   secret: 'secreto_super_seguro_sas', //esto lo pasamos al .env
   resave: false,
   saveUninitialized: false,
-  cookie: { secure: false, maxAge: 1000 * 60 * 2 * 1 } // tu sesion dura 1 min
+  cookie: { secure: false, maxAge: 1000 * 60 * 60 * 2 }
   // la formula es 1000 ml * 60 seg * 60 min * 2 hrs, asi se puede modificar
 }));
 
@@ -34,7 +34,7 @@ import apiRoutes from './routes/index.js';
 
 // Esta madre se descomenta antes de la presentacion loko
 
-/*
+
 
 const iniciarApp = async () => {
   console.log("Iniciando sistema...");
@@ -54,7 +54,7 @@ const iniciarApp = async () => {
 };
 
 iniciarApp();
-*/
+
 
 // NUEVO (Diego): Habilita CORS (permite que el frontend acceda a la API)
 app.use(cors());
@@ -66,23 +66,30 @@ app.use(express.json())
 // Todo lo que creaste aqui diego lo pase a Index.js SRP
 app.use('/api', apiRoutes);
 
-// ahora si eta madre lo llamada seguramente
-app.get('/principal', verificarSesionHTML, (req, res) => {
-  res.sendFile(path.join(__dirname, 'views', 'principal.html'));
-});
+
 
 
 // NUEVO (Diego): Servidor de archivos estáticos para mi frontend anterior
 app.use('/dashboard', express.static(path.join(__dirname, 'public/dashboard')));
 
+
 app.use(express.static(path.join(__dirname, 'public')));
+
+/*
 // Servir archivos estáticos automáticamente y ocultar la extensión .html en la URL
 app.use(express.static(path.join(__dirname, 'views'), {
   extensions: ['html']
 }));
+ */
+
+
+
+// ahora si eta madre lo llamada seguramente
+app.get('/principal', verificarSesionHTML, (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'principal.html'));
+});
 
 // Solo necesitas definir la ruta raíz ('/') manualmente
-
 app.get(['/', '/cuentaexistente'], (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'cuentaExistente.html'));
 });
