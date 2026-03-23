@@ -2,6 +2,9 @@ import express from 'express';
 import path from 'path';
 import cors from 'cors'; // NUEVO (Diego): Importa CORS para permitir peticiones desde otros dominios
 import { fileURLToPath } from 'url';
+import session from 'express-session';
+
+import { verificarSesionHTML } from './middlewares/authMiddleware.js';
 
 // Recreamos __filename y __dirname para ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -10,6 +13,15 @@ const __dirname = path.dirname(__filename);
 
 const app = express()
 const PORT = process.env.PORT || 3000;
+
+
+app.use(session({
+  secret: 'secreto_super_seguro_sas', //esto lo pasamos al .env
+  resave: false,
+  saveUninitialized: false,
+  cookie: { secure: false, maxAge: 1000 * 60 * 60 * 2 }
+  // la formula es 1000 ml * 60 seg * 60 min * 2 hrs, asi se puede modificar
+}));
 
 
 import { ejecutarScriptPython } from './python/pythonApi.js';
@@ -52,26 +64,39 @@ app.use(express.json())
 
 
 // Todo lo que creaste aqui diego lo pase a Index.js SRP
-
 app.use('/api', apiRoutes);
+
+
+
 
 // NUEVO (Diego): Servidor de archivos estáticos para mi frontend anterior
 app.use('/dashboard', express.static(path.join(__dirname, 'public/dashboard')));
 
+
 app.use(express.static(path.join(__dirname, 'public')));
+
+/*
 // Servir archivos estáticos automáticamente y ocultar la extensión .html en la URL
 app.use(express.static(path.join(__dirname, 'views'), {
   extensions: ['html']
 }));
+ */
+
+
+
+// ahora si eta madre lo llamada seguramente
+app.get('/principal', verificarSesionHTML, (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'principal.html'));
+});
 
 // Solo necesitas definir la ruta raíz ('/') manualmente
-
 app.get(['/', '/cuentaexistente'], (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'cuentaExistente.html'));
 });
 app.get('/newcuenta', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'newCuenta.html'));
 });
+
 // esta aun no la usare.
 app.get('/api/camiones', (req, res) => {
   // Más adelante, aquí harás la consulta a tu base de datos. 
@@ -105,6 +130,9 @@ app.post('/api/alertas', (req, res) => {
     recibido: nuevaAlerta
   });
 });
+
+
+
 
 app.listen(PORT, () => {
   // NUEVO (Diego): Mensaje modificado para confirmar que el servidor levantó con la fusión

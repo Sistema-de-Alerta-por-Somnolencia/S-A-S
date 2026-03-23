@@ -55,3 +55,11 @@ CREATE TABLE alertas (
     FOREIGN KEY (id_tipo_alerta) REFERENCES tipos_alerta(id_tipo_alerta),
     FOREIGN KEY (id_unidad) REFERENCES unidades(id_unidad)
 );
+
+CREATE TABLE usuarios{
+    id SERIAL PRIMARY KEY,
+    nombre varchar (255),
+    email varchar (255),
+    lastname varchar (255),
+    password varchar (255)
+}

@@ -42,7 +42,7 @@ export const createTipoAlerta = async (req, res) => {
 // --- ALERTAS ---
 export const getAlertas = async (req, res) => {
     try {
-        const result = await query("SELECT * FROM alertas");
+        const result = await query("SELECT * FROM alertas ORDER BY id DESC LIMIT 5");
         res.json(result.rows);
     } catch (error) {
         console.error(error);

@@ -2,8 +2,9 @@ import cv2
 import mediapipe as mp
 import numpy as np
 from mediapipe.framework.formats import landmark_pb2
-import requests
 import time  # con esta biblioteca sabre cuanto tiempo tuvo los ojos cerrados la persona
+
+from alertaFunction import hacer_sonar_alarma, enviar_json_camiones
 
 
 # Acceder a solutions via mp.solutions
@@ -71,7 +72,7 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 def main():
     # voy a usar estas variables para el tiempo
     tiempo_inicio_ojos_cerrados = None
-    TIEMPO_LIMITE_SEGUNDOS = 2.0  # Si pasan 4 segundos, mandamos la alerta
+    TIEMPO_LIMITE_SEGUNDOS = 4.0  # Si pasan 4 segundos, mandamos la alerta
     alerta_ya_enviada = False
     # Definimos las variables para ambos ojos
     ojo_cerrado_Izquierdo = 0.0
@@ -154,7 +155,6 @@ def main():
                     color_text = (0, 0, 255)  # color rojo
 
                     # Usamos flush=True para que Node lo vea al instante
-                    # print(f"Alerta de ojos Cerrados {ojo_cerrado_Derecho:.3f} {ojo_cerrado_Izquierdo:.3f}", flush=True)
 
                     #  Iniciar el cronometro si es la primera vez que cierra los ojos
                     if tiempo_inicio_ojos_cerrados is None:
@@ -170,13 +170,15 @@ def main():
                     ):
                         print("Alerta por Conductor mimido", flush=True)
                         datos_camion = {
-                            "id": "TRK-001",
+                            "id_unidad": "TRK-001",  # Antes era "id"
+                            "id_tipo_alerta": "dormido",  # Antes era "estado"
                             "chofer": "Erick Alejandro",
-                            "estado": "dormido",
                             "timestamp": time.time(),
                         }
                         enviar_json_camiones(datos_camion)
                         alerta_ya_enviada = True
+                        hacer_sonar_alarma("src/public/img/alerta.wav")
+                        # esta es la alerta sonora pq se yepete el conductor
 
                 else:
                     # Si los ojos NO están cerrados (es decir, los abrió), reiniciamos todo
@@ -201,7 +203,7 @@ def main():
 
             # Mostrar en ventana
             # cambiar bgr por 'frame' cuando quiera dejar de mostrar la malla y solo el texto
-            cv2.imshow("Detector de Sueño UAM", bgr_annotated_image)
+            cv2.imshow("Detector de Sueño UAM", frame)
 
             # Salir con 'q'
             if cv2.waitKey(1) & 0xFF == ord("q"):
@@ -211,34 +213,7 @@ def main():
     cv2.destroyAllWindows()
 
 
-def enviar_json_camiones(datos_camion):
-    """
-    Envía un JSON mediante POST si el booleano es True.
-    """
-
-    # Asegúrate de usar la URL completa, incluyendo el dominio/localhost
-    url = "http://localhost:3000/api/alertas"
-
-    try:
-        # El parámetro 'json=' automáticamente convierte el diccionario a JSON
-        # y añade el header 'Content-Type: application/json'
-        response = requests.post(url, json=datos_camion)
-
-        # Esto lanza una excepción si el servidor responde con un error (ej. 404, 500)
-        response.raise_for_status()
-
-        print("Petición enviada con éxito:", response.status_code, flush=True)
-        return response.json()  # Retorna la respuesta del servidor si es necesario
-
-    except requests.exceptions.RequestException as e:
-        print(f"Error al conectar con la API: {e}", flush=True)
-        return None
-
-
-# flag = True
-# mi_payload = {"id": 45, "ruta": "Norte", "activo": True}
-# enviar_json_camiones(flag, mi_payload)
-
+# llamamos a la funcion que manda el json al controller
 
 if __name__ == "__main__":
     main()

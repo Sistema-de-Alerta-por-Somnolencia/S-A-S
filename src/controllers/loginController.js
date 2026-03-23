@@ -28,14 +28,25 @@ export const login = async (req, res) => {
             console.log("Error comparando contraseña y hash")
             return res.status(401).json({ error: 'Credenciales invalidas' });
         }
+        req.session.userID = user.id;
+        req.session.email = user.email;
 
-        return res.status(200).json({
-            message: 'Login exitoso',
-            userID: user.id,
-            username: user.email
+        //  FORZAMOS EL GUARDADO ANTES DE RESPONDER
+        req.session.save((err) => {
+            if (err) {
+                console.error("Error guardando sesión:", err);
+                return res.status(500).json({ error: 'Error interno del servidor' });
+            }
+
+            // Si se guardo correctamente, ahora si le damos luz verde al frontend
+            return res.status(200).json({
+                message: 'Login exitoso',
+                userID: user.id,
+                username: user.email
+            });
         });
     } catch (err) {
-        console.error("Error durante el login", err.stack); // Usar console.error
+        console.error("Error durante el login", err.stack);
 
         return res.status(500).json({
             error: 'Error interno del servidor '
