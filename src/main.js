@@ -5,6 +5,9 @@ import { fileURLToPath } from 'url';
 import session from 'express-session';
 
 import { verificarSesionHTML } from './middlewares/authMiddleware.js';
+import session from 'express-session';
+
+import { verificarSesionHTML } from './middlewares/authMiddleware.js';
 
 // Recreamos __filename y __dirname para ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -13,7 +16,6 @@ const __dirname = path.dirname(__filename);
 
 const app = express()
 const PORT = process.env.PORT || 3000;
-
 
 
 app.use(session({
@@ -35,7 +37,7 @@ import viewRoutes from './routes/viewRoutes.js';
 
 // Esta madre se descomenta antes de la presentacion loko
 
-/*
+
 
 const iniciarApp = async () => {
   console.log("Iniciando sistema...");
@@ -55,7 +57,7 @@ const iniciarApp = async () => {
 };
 
 iniciarApp();
-*/
+
 
 // NUEVO (Diego): Habilita CORS (permite que el frontend acceda a la API)
 app.use(cors());
@@ -74,13 +76,24 @@ app.use('/', viewRoutes); // ahora ya puedes poner tus html Diego.
 app.use('/dashboard', express.static(path.join(__dirname, 'public/dashboard')));
 
 
+
 app.use(express.static(path.join(__dirname, 'public')));
+
+/*
 
 /*
 // Servir archivos estáticos automáticamente y ocultar la extensión .html en la URL
 app.use(express.static(path.join(__dirname, 'views'), {
   extensions: ['html']
 }));
+ */
+
+
+
+// ahora si eta madre lo llamada seguramente
+app.get('/principal', verificarSesionHTML, (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'principal.html'));
+});
  */
 
 
@@ -97,6 +110,7 @@ app.get(['/', '/cuentaexistente'], (req, res) => {
 app.get('/newcuenta', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'newCuenta.html'));
 });
+
 
 // esta aun no la usare.
 app.get('/api/camiones', (req, res) => {
@@ -131,6 +145,9 @@ app.post('/api/alertas', (req, res) => {
     recibido: nuevaAlerta
   });
 });
+
+
+
 
 
 
