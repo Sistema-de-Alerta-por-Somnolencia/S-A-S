@@ -53,7 +53,7 @@ export const createModelo = async (req, res) => {
 // --- UNIDADES ---
 export const getUnidades = async (req, res) => {
     try {
-        const result = await query("SELECT * FROM unidades ORDER BY id_unidad");
+        const result = await query("SELECT * FROM unidades ORDER BY id_unidad DESC LIMIT 5");
         res.json(result.rows);
     } catch (error) {
         console.error(error);
@@ -73,4 +73,15 @@ export const createUnidad = async (req, res) => {
         console.error(error);
         res.status(500).json({ error: "Error al registrar unidad" });
     }
+};
+
+export const getUnidadesChofer = async (req, res) => {
+    try {
+        const result = await query("SELECT u.id_unidad,u.placa,CONCAT(c.nombre, ' ', c.apellido_paterno, ' ', c.apellido_materno) AS nombre_chofer FROM unidades u LEFT JOIN choferes c ON u.id_chofer = c.id_chofer;");
+        res.json(result.rows);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: "Error al obtener unidades con sus choferes" });
+    }
+
 };

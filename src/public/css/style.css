@@ -265,3 +265,14 @@ th { color: var(--text-muted); font-weight: 600; font-size: 0.9rem; }
     cursor: pointer;
     font-weight: bold;
 }
+
+
+/*Si no hay chofer*/
+.sin-chofer {
+    color: var(--status-red);
+    font-weight: bold;
+    font-size: 0.85rem;
+    background-color: rgba(231, 76, 60, 0.1); 
+    padding: 4px 8px;
+    border-radius: 12px;
+}
