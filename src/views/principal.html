@@ -135,24 +135,10 @@
             <div class="panel alerts-panel">
                 <h3>Alertas Recientes</h3>
                 <table>
-                    <tbody>
-                        <ul id="alarta_nueva">
-                            <tr>
-                                <td><i class="fas fa-circle icon-orange"></i> 10:42 AM</td>
-                                <td>TRK-002</td>
-                                <td>Exceso de velocidad detectado</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-circle icon-red"></i> 09:15 AM</td>
-                                <td>TRK-004</td>
-                                <td>Nivel de combustible crítico</td>
-                            </tr>
-                            <tr>
-                                <td><i class="fas fa-circle icon-red"></i> 09:15 AM</td>
-                                <td>TRK-004</td>
-                                <td>Huachicoleo en progreso</td>
-                            </tr>
-                        </ul>
+                    <tbody id="tabla_alertas">
+                        <tr>
+                            <td colspan="3">Cargando alertas...</td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -160,39 +146,39 @@
     </main>
 
     <script>
-    const themeBtn = document.getElementById('theme-btn');
-    const htmlElement = document.documentElement;
+        const themeBtn = document.getElementById('theme-btn');
+        const htmlElement = document.documentElement;
 
-    // 1. Al cargar la página: Leer la "memoria" del navegador
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    
-    // 2. Aplicar el tema guardado de inmediato
-    htmlElement.setAttribute('data-theme', savedTheme);
-    actualizarBoton(savedTheme);
+        // 1. Al cargar la página: Leer la "memoria" del navegador
+        const savedTheme = localStorage.getItem('theme') || 'light';
 
-    // 3. Escuchar el clic para cambiar y GUARDAR el tema
-    themeBtn.addEventListener('click', () => {
-        const currentTheme = htmlElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
-        // Aplicar visualmente
-        htmlElement.setAttribute('data-theme', newTheme);
-        
-        // Guardar en la libreta del navegador (esto es lo que comparte el color entre páginas)
-        localStorage.setItem('theme', newTheme);
-        
-        actualizarBoton(newTheme);
-    });
+        // 2. Aplicar el tema guardado de inmediato
+        htmlElement.setAttribute('data-theme', savedTheme);
+        actualizarBoton(savedTheme);
 
-    // Función auxiliar para que el texto del botón también coincida
-    function actualizarBoton(theme) {
-        if (theme === 'dark') {
-            themeBtn.innerHTML = '<i class="fas fa-sun"></i> Modo Día';
-        } else {
-            themeBtn.innerHTML = '<i class="fas fa-moon"></i> Modo Noche';
+        // 3. Escuchar el clic para cambiar y GUARDAR el tema
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+
+            // Aplicar visualmente
+            htmlElement.setAttribute('data-theme', newTheme);
+
+            // Guardar en la libreta del navegador (esto es lo que comparte el color entre páginas)
+            localStorage.setItem('theme', newTheme);
+
+            actualizarBoton(newTheme);
+        });
+
+        // Función auxiliar para que el texto del botón también coincida
+        function actualizarBoton(theme) {
+            if (theme === 'dark') {
+                themeBtn.innerHTML = '<i class="fas fa-sun"></i> Modo Día';
+            } else {
+                themeBtn.innerHTML = '<i class="fas fa-moon"></i> Modo Noche';
+            }
         }
-    }
-</script>
+    </script>
 </body>
 
 </html>
