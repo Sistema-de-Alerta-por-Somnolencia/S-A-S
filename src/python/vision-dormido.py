@@ -177,7 +177,7 @@ def main():
                         }
                         enviar_json_camiones(datos_camion)
                         alerta_ya_enviada = True
-                        hacer_sonar_alarma("src/public/img/alerta.wavpn")
+                        hacer_sonar_alarma("src/public/img/alerta.wav")
                         # esta es la alerta sonora pq se yepete el conductor
 
                 else:
