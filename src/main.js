@@ -22,7 +22,7 @@ import apiRoutes from './routes/index.js';
 
 // Esta madre se descomenta antes de la presentacion loko
 
-/*
+
 
 const iniciarApp = async () => {
   console.log("Iniciando sistema...");
@@ -42,7 +42,7 @@ const iniciarApp = async () => {
 };
 
 iniciarApp();
-*/
+
 
 // NUEVO (Diego): Habilita CORS (permite que el frontend acceda a la API)
 app.use(cors());
