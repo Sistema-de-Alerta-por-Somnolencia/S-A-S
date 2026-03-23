@@ -16,7 +16,7 @@ def hacer_sonar_alarma(archivo_wav):
         elif sistema == "Windows":  # Windows
             import winsound
 
-            winsound.PlaySound(archivo_wav, winsound.SND_FILENAME | winsound.SND_ASYNC)
+            winsound.PlaySound(archivo_wav, winsound.SND_FILENAME | winsound.SND_ASYNC)  # type:ignore
         elif sistema == "Linux":  # Linux / Docker
             subprocess.Popen(["aplay", archivo_wav])
         else:

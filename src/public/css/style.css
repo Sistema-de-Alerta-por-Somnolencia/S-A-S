@@ -156,7 +156,7 @@ body {
    ========================================= */
 section { padding: 20px 30px; gap: 20px; }
 
-.top-section { display: grid; grid-template-columns: 2fr 1.5fr; gap: 20px; }
+.top-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 .bottom-section { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
 .panel {
@@ -172,16 +172,22 @@ section { padding: 20px 30px; gap: 20px; }
 
 /* MAPA PLACEHOLDER */
 .map-placeholder {
-    width: 100%; height: 300px;
+    width: 100%; height: 400px;
     background: url('https://www.transparenttextures.com/patterns/cubes.png'), var(--border-color);
-    border-radius: 5px;
+    border-radius: 8px;
     position: relative;
     overflow: hidden;
+    min-height: 400px;
 }
-
+#mapa-flota{
+    max-width: 100%; 
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+}
 .mock-truck {
     width: 15px; height: 15px; border-radius: 50%;
-    position: absolute; border: 2px solid white;
+    position: absolute; border: 2px solid rgb(0, 0, 0);
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 .mock-truck.green { background-color: var(--status-green); }
@@ -191,9 +197,10 @@ section { padding: 20px 30px; gap: 20px; }
 .mock-popup {
     position: absolute;
     background: var(--bg-panel);
+    color: black;
     border: 1px solid var(--border-color);
     padding: 10px; border-radius: 5px;
-    font-size: 0.8rem; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-size: 0.8rem; box-shadow: 0 0px 10px rgba(9, 9, 9, 0.1);
 }
 
 /* TABLAS */

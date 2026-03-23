@@ -51,61 +51,23 @@
             <div class="panel map-panel">
                 <h3><i class="fas fa-map"></i> Ubicación Global</h3>
                 <div class="map-placeholder">
-                    <div class="mock-map">
-                        <div class="mock-truck green" style="top: 30%; left: 40%;" title="TRK-004"></div>
-                        <div class="mock-truck orange" style="top: 50%; left: 60%;"></div>
-                        <div class="mock-truck red" style="top: 70%; left: 30%;"></div>
-
-                        <div class="mock-popup" style="top: 20%; left: 42%;">
-                            <strong>TRK-004</strong><br>
-                            Chofer: Roberto M.<br>
-                            Vel: 85 km/h<br>
-                            Destino: CEDIS Norte
-                        </div>
-                    </div>
+                    <div id="mapa-flota"></div>
                 </div>
             </div>
-
             <div class="panel list-panel">
                 <h3>Lista de Camiones</h3>
-                <div class="table-responsive">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Placa</th>
-                                <th>Estado</th>
-                                <th>Velocidad</th>
-                                <th>Combustible</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>TRK-001</td>
-                                <td>ABC-123</td>
-                                <td><span class="status-badge green">Activo</span></td>
-                                <td>85 km/h</td>
-                                <td>62%</td>
-                            </tr>
-                            <tr>
-                                <td>TRK-002</td>
-                                <td>XYZ-987</td>
-                                <td><span class="status-badge orange">Aviso</span></td>
-                                <td>110 km/h</td>
-                                <td>40%</td>
-                            </tr>
-                            <tr>
-                                <td>TRK-004</td>
-                                <td>LMN-456</td>
-                                <td><span class="status-badge red">Crítico</span></td>
-                                <td>0 km/h</td>
-                                <td>10%</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <table>
+                    <tbody id="tabla_Camiones">
+                        <tr>
+                            <td colspan="3">Cargando Camiones...</td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </section>
+
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCZxJOSELUfluXIQKtR486shGw64labaD0&callback=initMap"></script>
 
         <section class="bottom-section">
             <div class="kpi-grid">
@@ -180,6 +142,7 @@
         }
     </script>
     <script src="/js/alertas.js"></script>
+    <script src="/js/maps.js"></script>
 </body>
 
 </html>

@@ -112,16 +112,13 @@ app.get('/newcuenta', (req, res) => {
 });
 
 
-// esta aun no la usare.
+// esta es la api para el maps
 app.get('/api/camiones', (req, res) => {
-  // Más adelante, aquí harás la consulta a tu base de datos. 
-  // Por ahora, devolvemos datos "mockeados" (de prueba).
   const camionesMock = [
-    { id: 'TRK-001', chofer: 'Roberto M.', estado: 'activo', velocidad: 83, combustible: 62 },
-    { id: 'TRK-002', chofer: 'Ana G.', estado: 'advertencia', velocidad: 110, combustible: 40 },
-    { id: 'TRK-004', chofer: 'Luis P.', estado: 'mantenimiento', velocidad: 0, combustible: 10 }
+    { id: 'TRK-001', chofer: 'Roberto M.', estado: 'activo', lat: 19.4326, lng: -99.1332 }, // Centro Histórico
+    { id: 'TRK-002', chofer: 'Ana G.', estado: 'advertencia', lat: 19.3553, lng: -99.0622 }, // Iztapalapa
+    { id: 'TRK-004', chofer: 'Luis P.', estado: 'mantenimiento', lat: 19.4978, lng: -99.1269 } // Gustavo A. Madero
   ];
-
   res.json(camionesMock);
 });
 
