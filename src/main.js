@@ -5,9 +5,9 @@ import { fileURLToPath } from 'url';
 import session from 'express-session';
 
 import { verificarSesionHTML } from './middlewares/authMiddleware.js';
-import session from 'express-session';
 
-import { verificarSesionHTML } from './middlewares/authMiddleware.js';
+
+
 
 // Recreamos __filename y __dirname para ES Modules
 const __filename = fileURLToPath(import.meta.url);
@@ -94,7 +94,7 @@ app.use(express.static(path.join(__dirname, 'views'), {
 app.get('/principal', verificarSesionHTML, (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'principal.html'));
 });
- */
+
 
 
 
