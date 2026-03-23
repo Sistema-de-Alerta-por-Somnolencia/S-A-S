@@ -15,6 +15,7 @@ const app = express()
 const PORT = process.env.PORT || 3000;
 
 
+
 app.use(session({
   secret: 'secreto_super_seguro_sas', //esto lo pasamos al .env
   resave: false,
@@ -27,14 +28,14 @@ app.use(session({
 import { ejecutarScriptPython } from './python/pythonApi.js';
 
 import apiRoutes from './routes/index.js';
-
+import viewRoutes from './routes/viewRoutes.js';
 
 
 
 
 // Esta madre se descomenta antes de la presentacion loko
 
-
+/*
 
 const iniciarApp = async () => {
   console.log("Iniciando sistema...");
@@ -54,7 +55,7 @@ const iniciarApp = async () => {
 };
 
 iniciarApp();
-
+*/
 
 // NUEVO (Diego): Habilita CORS (permite que el frontend acceda a la API)
 app.use(cors());
@@ -65,7 +66,7 @@ app.use(express.json())
 
 // Todo lo que creaste aqui diego lo pase a Index.js SRP
 app.use('/api', apiRoutes);
-
+app.use('/', viewRoutes); // ahora ya puedes poner tus html Diego.
 
 
 
