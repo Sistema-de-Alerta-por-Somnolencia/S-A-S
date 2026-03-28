@@ -79,14 +79,7 @@ app.use('/dashboard', express.static(path.join(__dirname, 'public/dashboard')));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-/*
 
-/*
-// Servir archivos estáticos automáticamente y ocultar la extensión .html en la URL
-app.use(express.static(path.join(__dirname, 'views'), {
-  extensions: ['html']
-}));
- */
 
 
 

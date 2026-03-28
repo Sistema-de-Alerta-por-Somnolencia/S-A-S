@@ -5,6 +5,7 @@ from mediapipe.framework.formats import landmark_pb2
 import time  # con esta biblioteca sabre cuanto tiempo tuvo los ojos cerrados la persona
 
 from alertaFunction import hacer_sonar_alarma, enviar_json_camiones
+from correo import enviar_correos_dinamicos
 
 
 # Acceder a solutions via mp.solutions
@@ -176,6 +177,8 @@ def main():
                             "timestamp": time.time(),
                         }
                         enviar_json_camiones(datos_camion)
+                        enviar_correos_dinamicos(datos_camion)
+
                         alerta_ya_enviada = True
                         hacer_sonar_alarma("src/public/img/alerta.wav")
                         # esta es la alerta sonora pq se yepete el conductor
