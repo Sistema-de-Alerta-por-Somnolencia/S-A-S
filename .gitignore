@@ -4,6 +4,7 @@ npm-debug.log
 package-lock.json
 
 # Python
+.venv/
 venv/
 __pycache__/
 *.pyc
