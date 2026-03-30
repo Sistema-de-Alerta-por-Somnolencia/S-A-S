@@ -1,6 +1,12 @@
 import os
 import logging
 import platform  # Para detectar el sistema operativo
+
+# 1. SILENCIADO TOTAL DE LOGS (Evita spam en terminal)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+os.environ['ABSL_LOGGING_LEVEL'] = 'error' # Esto quita los mensajes de "Successfully initialized EGL"
+os.environ['QT_LOGGING_RULES'] = 'qt.qpa.fonts=false;qt.qpa.clipboard=false;qt.qpa.*=false;*.debug=false'
+
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -13,11 +19,6 @@ from correo import enviar_correos_dinamicos
 
 # --- DETECCIÓN AUTOMÁTICA DE SISTEMA ---
 sistema_operativo = platform.system()
-
-# 1. SILENCIADO TOTAL DE LOGS (Evita spam en terminal)
-os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
-os.environ["ABSL_LOGGING_LEVEL"] = "error"
-os.environ["QT_LOGGING_RULES"] = "qt.qpa.*=false;*.debug=false"
 
 # Solo aplicar prioridad MSMF si es Windows
 if sistema_operativo == "Windows":
