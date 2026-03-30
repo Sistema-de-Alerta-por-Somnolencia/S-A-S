@@ -1,10 +1,11 @@
 import smtplib
 import csv
-import os  # Importamos OS para manejar rutas de carpetas
-import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
-from email.mime.application import MIMEApplication
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 # ==========================================
 #              CONFIGURACIÓN
@@ -12,128 +13,97 @@ from email.mime.application import MIMEApplication
 
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587
-EMAIL_REMITENTE = "alejandrovaca585@gmail.com"
-PASSWORD = "weol orfm wool ldjh"
+EMAIL_REMITENTE = os.getenv("EMAIL_REMITENTE")
+PASSWORD_MAIL = os.getenv("PASSWORD_MAIL")
 
-ARCHIVO_CSV = "contactos.csv" # de aqui salen los datos de los correos a los que se envia la alerta
-# quiero que se queda la logica de enviar el correo a mas de un correo por si el 'cliente'
-# quiere que se le notifique a n numero de personas
-
+DIRECTORIO_BASE = os.path.dirname(os.path.abspath(__file__))
+ARCHIVO_CSV = os.path.join(DIRECTORIO_BASE, "contactos.csv")
 
 
-datos_camion = {
-                            "id_unidad": "TRK-001", 
-                            "id_tipo_alerta": "dormido",  
-                            "chofer": "Erick Alejandro",
-                            "timestamp": time.time(),
-}
-
-ASUNTO = "Alerta por Incidencia"
-
-MENSAJE_PRINCIPAL = """
-    El equipo de SAS envia este correo con la finalidad de alertar por una señal en la 
-    Unidad {},
-    de Tipo {}
-    Hora {},
-    Conductor {},
-    Cordenadas: Longitud{{},Latitud{}}
-
-"""
-
-LIMITE_DIARIO = 400
-
-
-def enviar_correos_dinamicos(String datos_camion):
-    contador_envios = 0
-    lista_actualizada = []
-
-    # 1. Conexión al servidor
+def enviar_correos_dinamicos(datos_camion):
+    """
+    Función que lee el CSV de contactos y envía una alerta a todos.
+    Recibe el diccionario 'datos_camion' con la info en tiempo real.
+    """
+    # 1. Conexión al servidor SMTP
     try:
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
         server.starttls()
-        server.login(EMAIL_REMITENTE, PASSWORD)
-        print("✅ Conectado al servidor.")
+        server.login(EMAIL_REMITENTE, PASSWORD_MAIL)  # type: ignore
+        print("✅ Conectado al servidor SMTP de Gmail.", flush=True)
     except Exception as e:
-        print(f"❌ Error de conexión: {e}")
+        print(f"❌ Error de conexión: {e}", flush=True)
         return
 
-    # 2. Leer CSV
+    # 2. Leer CSV de contactos
     try:
         with open(ARCHIVO_CSV, "r", encoding="utf-8") as file:
             reader = csv.DictReader(file)
-            fieldnames = reader.fieldnames
             filas = list(reader)
     except FileNotFoundError:
-        print(f"❌ No se encuentra '{ARCHIVO_CSV}'")
+        print(f"❌ No se encuentra '{ARCHIVO_CSV}'", flush=True)
         return
 
-    print(f"📂 Procesando {len(filas)} contactos...")
+    print(f"📂 Procesando {len(filas)} contactos para enviar alerta...", flush=True)
 
-    # 3. Bucle de envío
+    # 3. Bucle de envío a todos los contactos del CSV
     for fila in filas:
-        # Validaciones de límite y estado
-        if contador_envios >= LIMITE_DIARIO:
-            lista_actualizada.append(fila)
-            continue
-
-        if fila.get("Estado") == "ENVIADO":
-            lista_actualizada.append(fila)
-            continue
-
-        # --- Lógica del PDF Único ---
-        nombre_archivo = fila["Archivo"]  # Leemos el nombre de la columna 'Archivo'
-        ruta_completa = os.path.join(CARPETA_PDFS, nombre_archivo)
-
-        # Verificamos si el archivo existe antes de intentar enviar
-        if not os.path.isfile(ruta_completa):
-            print(
-                f"⚠️  ARCHIVO NO ENCONTRADO: {nombre_archivo} (Para {fila['Nombre']}). Se saltará este correo."
-            )
-            # No marcamos como enviado, se queda pendiente para cuando arregles el archivo
-            lista_actualizada.append(fila)
-            continue
-
-        # Intento de envío
         try:
             msg = MIMEMultipart()
-            msg["From"] = EMAIL_REMITENTE
+            msg["From"] = EMAIL_REMITENTE  # type: ignore
             msg["To"] = fila["Email"]
-            msg["Subject"] = ASUNTO
 
-            cuerpo_final = f"Estimado {fila['Nombre']},\n\n{MENSAJE_PRINCIPAL}"
-            msg.attach(MIMEText(cuerpo_final, "plain"))
-
-            # Adjuntar el PDF específico
-            with open(ruta_completa, "rb") as f:
-                adjunto = MIMEApplication(f.read(), _subtype="pdf")
-                adjunto.add_header(
-                    "Content-Disposition", "attachment", filename=nombre_archivo
-                )
-                msg.attach(adjunto)
-
-            server.send_message(msg)
-            print(
-                f"📤 [{contador_envios + 1}/{LIMITE_DIARIO}] Enviado a {fila['Email']} | Archivo: {nombre_archivo}"
+            # Personalizamos el asunto con el ID de la unidad
+            msg["Subject"] = (
+                f"🚨 ALERTA CRÍTICA: Unidad {datos_camion.get('id_unidad', 'Desconocida')}"
             )
 
-            fila["Estado"] = "ENVIADO"
-            contador_envios += 1
+            nombre_monitorista = fila.get("Nombre", "Monitorista").strip()
+            lat = datos_camion.get("latitud", "N/A")
+            lon = datos_camion.get("longitud", "N/A")
+
+            # Generamos un enlace para que el monitorista abra el mapa directo
+            enlace_mapa = (
+                f"https://www.google.com/maps?q={lat},{lon}"
+                if lat != "N/A"
+                else "Ubicación no disponible"
+            )
+
+            cuerpo_final = f""" Hola {nombre_monitorista},
+
+            El equipo de SAS envía este correo para alertar sobre una incidencia crítica detectada en tiempo real:
+
+            - Unidad: {datos_camion.get("id_unidad", "N/A")}
+            - Chofer: {datos_camion.get("chofer", "N/A")}
+            - Tipo de Alerta: {datos_camion.get("id_tipo_alerta", "N/A").upper()}
+            - Timestamp: {datos_camion.get("timestamp", "N/A")}
+            - Coordenadas: {datos_camion.get("latitud", "N/A")}, {datos_camion.get("longitud", "N/A")}
+            - Ver en el mapa: {enlace_mapa}
+
+            Por favor, comuníquese con el conductor inmediatamente.
+            """
+            msg.attach(MIMEText(cuerpo_final, "plain"))
+
+            # Enviar el correo
+            server.send_message(msg)
+            print(f"📤 Alerta enviada exitosamente a {fila['Email']}", flush=True)
 
         except Exception as e:
-            print(f"⚠️ Error enviando a {fila['Email']}: {e}")
+            print(f"⚠️ Error enviando correo a {fila['Email']}: {e}", flush=True)
 
-        lista_actualizada.append(fila)
-
+    # Cerrar conexión
     server.quit()
-
-    # 4. Guardar CSV
-    with open(ARCHIVO_CSV, "w", newline="", encoding="utf-8") as file:
-        writer = csv.DictWriter(file, fieldnames=fieldnames)
-        writer.writeheader()
-        writer.writerows(lista_actualizada)
-
-    print(f"\n🏁 Sesión terminada. Enviados hoy: {contador_envios}")
+    print("🏁 Envío de correos de emergencia finalizado.", flush=True)
 
 
+# Para probar el script de forma individual
 if __name__ == "__main__":
-    enviar_correos_dinamicos()
+    import time
+
+    datos_prueba = {
+        "id_unidad": "TRK-001",
+        "id_tipo_alerta": "dormido",
+        "chofer": "Erick Alejandro",
+        "timestamp": time.time(),
+    }
+    enviar_correos_dinamicos(datos_prueba)

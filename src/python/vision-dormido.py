@@ -3,6 +3,7 @@ import mediapipe as mp
 import numpy as np
 from mediapipe.framework.formats import landmark_pb2
 import time  # con esta biblioteca sabre cuanto tiempo tuvo los ojos cerrados la persona
+import threading
 
 from alertaFunction import hacer_sonar_alarma, enviar_json_camiones
 from correo import enviar_correos_dinamicos
@@ -71,9 +72,10 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 
 # BUCLE PRINCIPAL
 def main():
+
     # voy a usar estas variables para el tiempo
     tiempo_inicio_ojos_cerrados = None
-    TIEMPO_LIMITE_SEGUNDOS = 4.0  # Si pasan 4 segundos, mandamos la alerta
+    TIEMPO_LIMITE_SEGUNDOS = 3.0
     alerta_ya_enviada = False
     # Definimos las variables para ambos ojos
     ojo_cerrado_Izquierdo = 0.0
@@ -170,18 +172,30 @@ def main():
                         and not alerta_ya_enviada
                     ):
                         print("Alerta por Conductor mimido", flush=True)
+                        # coordenadas Mock
+                        latitud_mock = 19.4326
+                        longitud_mock = -99.1332
+
                         datos_camion = {
-                            "id_unidad": "TRK-001",  # Antes era "id"
-                            "id_tipo_alerta": "dormido",  # Antes era "estado"
+                            "id_unidad": "TRK-001",
+                            "id_tipo_alerta": "dormido",
                             "chofer": "Erick Alejandro",
                             "timestamp": time.time(),
+                            "latitud": latitud_mock,
+                            "longitud": longitud_mock,
                         }
+
+                        # Enviar JSON
                         enviar_json_camiones(datos_camion)
-                        enviar_correos_dinamicos(datos_camion)
+
+                        # ahora usamos un hilo diferente para enviar correos, asi no detenemos la deteccion de sueño en video
+                        hilo_correo = threading.Thread(
+                            target=enviar_correos_dinamicos, args=(datos_camion,)
+                        )
+                        hilo_correo.start()
 
                         alerta_ya_enviada = True
                         hacer_sonar_alarma("src/public/img/alerta.wav")
-                        # esta es la alerta sonora pq se yepete el conductor
 
                 else:
                     # Si los ojos NO están cerrados (es decir, los abrió), reiniciamos todo
