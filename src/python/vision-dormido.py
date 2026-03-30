@@ -1,3 +1,9 @@
+import os
+import logging
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+os.environ['ABSL_LOGGING_LEVEL'] = 'error' # Esto quita los mensajes de "Successfully initialized EGL"
+os.environ['QT_LOGGING_RULES'] = 'qt.qpa.fonts=false;qt.qpa.clipboard=false'
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -83,7 +89,7 @@ def main():
     boca_abierta = 0.0
 
     # Inicializar la camara (0 suele ser la webcam por defecto)
-    cap = cv2.VideoCapture(1)
+    cap = cv2.VideoCapture(0)
 
     # Crear el detector dentro de un bloque 'with' para asegurar que se cierre bien
     with FaceLandmarker.create_from_options(options) as landmarker:
