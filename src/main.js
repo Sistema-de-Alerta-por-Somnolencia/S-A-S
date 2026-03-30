@@ -58,7 +58,7 @@ const iniciarApp = async () => {
   }
 };
 
-//iniciarApp();
+iniciarApp();
 
 
 // NUEVO (Diego): Habilita CORS (permite que el frontend acceda a la API)

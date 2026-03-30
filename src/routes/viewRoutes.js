@@ -34,5 +34,10 @@ router.get('/choferes', verificarSesionHTML, (req, res) => {
 
 // Si después agregas 'flota.html', solo lo metes aquí
 // router.get('/flota', verificarSesionHTML, ...);
+router.get('/unidades', verificarSesionHTML, (req, res) => {
+    res.sendFile(path.join(viewsPath, 'unidades.html'));
+});
+
+
 
 export default router;
