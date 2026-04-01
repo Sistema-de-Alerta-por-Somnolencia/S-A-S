@@ -45,3 +45,18 @@ async function initMap() {
         console.error("Error al cargar las unidades en el mapa:", error);
     }
 }
+
+// Le pedimos la llave a nuestro propio servidor Node
+fetch('/api/config/maps')
+    .then(response => response.json())
+    .then(data => {
+        // Creamos la etiqueta <script> dinámicamente
+        const script = document.createElement('script');
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${data.apiKey}&callback=initMap`;
+        script.async = true;
+        script.defer = true;
+
+        // La pegamos en el HTML para que cargue el mapa
+        document.head.appendChild(script);
+    })
+    .catch(error => console.error("Error cargando la llave de Maps:", error));
