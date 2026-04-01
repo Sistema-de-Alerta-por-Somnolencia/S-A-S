@@ -7,8 +7,7 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 dotenv.config();
 
-import dotenv from 'dotenv';
-dotenv.config();
+
 
 import { verificarSesionHTML } from './middlewares/authMiddleware.js';
 
@@ -44,7 +43,7 @@ app.get('/CargarMapa', (req, res) => {
 
 
 // Esta madre se descomenta antes de la presentacion loko
-/*
+
 
 
 const iniciarApp = async () => {
@@ -67,7 +66,7 @@ const iniciarApp = async () => {
 };
 
 iniciarApp();
-*/
+
 
 // NUEVO (Diego): Habilita CORS (permite que el frontend acceda a la API)
 app.use(cors());
