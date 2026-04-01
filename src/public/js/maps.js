@@ -47,7 +47,7 @@ async function initMap() {
 }
 
 // Le pedimos la llave a nuestro propio servidor Node
-fetch('/CargarMapa')
+fetch('/cargarMapa')
     .then(response => response.json())
     .then(data => {
         // Creamos la etiqueta <script> dinámicamente
