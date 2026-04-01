@@ -77,7 +77,7 @@ export const createUnidad = async (req, res) => {
 
 export const getUnidadesChofer = async (req, res) => {
     try {
-        const result = await query("SELECT u.id_unidad,u.placa,CONCAT(c.nombre, ' ', c.apellido_paterno, ' ', c.apellido_materno) AS nombre_chofer FROM unidades u LEFT JOIN choferes c ON u.id_chofer = c.id_chofer;");
+        const result = await query("SELECT u.id_unidad, u.placa, CONCAT(c.nombre, ' ', c.apellido_paterno, ' ', c.apellido_materno) AS nombre_chofer FROM unidades u LEFT JOIN choferes c ON u.id_chofer = c.id_chofer ORDER BY u.id_unidad DESC LIMIT 7;");
         res.json(result.rows);
     } catch (error) {
         console.error(error);
