@@ -1,5 +1,4 @@
 import os
-import logging
 
 os.environ["TF_CPP_MIN_LOG_LEVEL"] = "3"
 os.environ["ABSL_LOGGING_LEVEL"] = (
@@ -12,6 +11,7 @@ import numpy as np
 from mediapipe.framework.formats import landmark_pb2
 import time  # con esta biblioteca sabre cuanto tiempo tuvo los ojos cerrados la persona
 import threading
+
 
 from alertaFunction import hacer_sonar_alarma, enviar_json_camiones
 from correo import enviar_correos_dinamicos
