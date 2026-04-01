@@ -14,6 +14,7 @@ from mediapipe.framework.formats import landmark_pb2
 import time
 import threading
 
+
 from alertaFunction import hacer_sonar_alarma, enviar_json_camiones
 from correo import enviar_correos_dinamicos
 
