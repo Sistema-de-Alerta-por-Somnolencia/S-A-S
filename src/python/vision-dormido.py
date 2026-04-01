@@ -26,7 +26,7 @@ if sistema_operativo == "Windows":
     os.environ["OPENCV_VIDEOIO_PRIORITY_MSMF"] = "0"
 
 
-# Acceder a solutions via mp.solutions
+# Acceder a solutions via mp.solutions (funciona en 0.10.x)
 mp_drawing = mp.solutions.drawing_utils  # type: ignore
 mp_drawing_styles = mp.solutions.drawing_styles  # type: ignore
 mp_face_mesh = mp.solutions.face_mesh  # type: ignore
@@ -73,7 +73,8 @@ def draw_landmarks_on_image(rgb_image, detection_result):
 
 def main():
     tiempo_inicio_ojos_cerrados = None
-    TIEMPO_LIMITE_SEGUNDOS = 3.0
+    TIEMPO_LIMITE_SEGUNDOS = 2.0  # Si pasan 4 segundos, mandamos la alerta
+    TIEMPO_LIMITE_SEGUNDOS = 2.0  # Si pasan 4 segundos, mandamos la alerta
     alerta_ya_enviada = False
     
     # 2. INICIALIZAR CÁMARA CON DETECCIÓN AUTOMÁTICA DE BACKEND
@@ -110,14 +111,29 @@ def main():
             if detection_result.face_blendshapes:
                 face_blendshapes = detection_result.face_blendshapes[0]
 
-                # Extraer scores
-                scores = {b.category_name: b.score for b in face_blendshapes}
-                ojos_cerrados = (
-                    scores.get("eyeBlinkLeft", 0) > 0.5
-                    and scores.get("eyeBlinkRight", 0) > 0.5
-                )
+                """ Imprimimos todos los blendshapes para ver sus nombres y valores 
+                for blendshape in face_blendshapes:
+                    print(f"{blendshape.category_name}: {blendshape.score:.3f}")
+                """
 
-                if ojos_cerrados:
+                for blendshape in face_blendshapes:
+                    if blendshape.category_name == "eyeBlinkLeft":
+                        ojo_cerrado_Izquierdo = blendshape.score
+                    elif blendshape.category_name == "eyeBlinkRight":
+                        ojo_cerrado_Derecho = blendshape.score
+                    if blendshape.category_name == "jawOpen":
+                        boca_abierta = blendshape.score
+
+                if ojo_cerrado_Izquierdo > 0.500 and ojo_cerrado_Derecho > 0.500:
+                    ojosCerrados = True
+                    texto_en_pantalla = "       Zzzzz.."
+                    color_text = (0, 0, 255)  # color rojo
+
+                    # Usamos flush=True para que Node lo vea al instante
+                    # print(f"Alerta de ojos Cerrados {ojo_cerrado_Derecho:.3f} {ojo_cerrado_Izquierdo:.3f}", flush=True)
+                    # print(f"Alerta de ojos Cerrados {ojo_cerrado_Derecho:.3f} {ojo_cerrado_Izquierdo:.3f}", flush=True)
+
+                    #  Iniciar el cronometro si es la primera vez que cierra los ojos
                     if tiempo_inicio_ojos_cerrados is None:
                         tiempo_inicio_ojos_cerrados = time.time()
 
@@ -131,22 +147,11 @@ def main():
                             "id_unidad": "TRK-001",
                             "id_tipo_alerta": "Dormido",
                             "chofer": "Erick Alejandro",
-                            "latitud": 19.4326,
-                            "longitud": -99.1332,
+                            "timestamp": time.time(),
                         }
+                        enviar_json_camiones(datos_camion)
+                        alerta_ya_enviada = True
 
-                        # 4. LANZAR HILOS COMO DAEMON (Evita duplicidad de ventanas)
-                        threading.Thread(
-                            target=enviar_json_camiones, args=(datos,), daemon=True
-                        ).start()
-                        threading.Thread(
-                            target=enviar_correos_dinamicos, args=(datos,), daemon=True
-                        ).start()
-                        threading.Thread(
-                            target=hacer_sonar_alarma,
-                            args=("src/public/img/alerta.wav",),
-                            daemon=True,
-                        ).start()
                 else:
                     tiempo_inicio_ojos_cerrados = None
                     alerta_ya_enviada = False
