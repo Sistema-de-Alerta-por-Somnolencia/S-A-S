@@ -8,6 +8,7 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 
+
 import { verificarSesionHTML } from './middlewares/authMiddleware.js';
 
 
@@ -50,7 +51,7 @@ const iniciarApp = async () => {
 
   try {
     console.log("Llamando a Python...");
-    
+
     // ELIMINA EL 'await'. Solo llama a la función.
     // Esto permite que Node siga ejecutando el resto del código sin esperar.
     ejecutarScriptPython()

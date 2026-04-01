@@ -76,12 +76,16 @@ def main():
     alerta_ya_enviada = False
     
     # 2. INICIALIZAR CÁMARA CON DETECCIÓN AUTOMÁTICA DE BACKEND
+    # Se usa índice 1 si se especificó en el commit entrante, de lo contrario 0.
+    # Aquí usaré 1 como sugirió el commit 'fix'
+    cam_index = 1 
+
     if sistema_operativo == "Linux":
-        cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
+        cap = cv2.VideoCapture(cam_index, cv2.CAP_V4L2)
     elif sistema_operativo == "Darwin": # macOS
-        cap = cv2.VideoCapture(0, cv2.CAP_AVFOUNDATION)
+        cap = cv2.VideoCapture(cam_index, cv2.CAP_AVFOUNDATION)
     else: # Windows o genérico
-        cap = cv2.VideoCapture(0)
+        cap = cv2.VideoCapture(cam_index)
 
     # 3. CREAR VENTANA UNA SOLA VEZ (Fuera del bucle)
     cv2.namedWindow("Detector de Sueno UAM", cv2.WINDOW_NORMAL)

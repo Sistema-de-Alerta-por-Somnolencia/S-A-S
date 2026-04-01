@@ -47,11 +47,7 @@ async function initMap() {
 }
 
 // Le pedimos la llave a nuestro propio servidor Node
-<<<<<<< HEAD
 fetch('/CargarMapa')
-=======
-fetch('/api/config/maps')
->>>>>>> a74f9f2 (mapas protegidos)
     .then(response => response.json())
     .then(data => {
         // Creamos la etiqueta <script> dinámicamente
