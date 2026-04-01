@@ -4,8 +4,10 @@ import cors from 'cors'; // NUEVO (Diego): Importa CORS para permitir peticiones
 import { fileURLToPath } from 'url';
 import session from 'express-session';
 
-import { verificarSesionHTML } from './middlewares/authMiddleware.js';
+import dotenv from 'dotenv';
+dotenv.config();
 
+import { verificarSesionHTML } from './middlewares/authMiddleware.js';
 
 
 
@@ -32,7 +34,10 @@ import { ejecutarScriptPython } from './python/pythonApi.js';
 import apiRoutes from './routes/index.js';
 import viewRoutes from './routes/viewRoutes.js';
 
-
+// con esto se sirve la llave de maps con seguridad
+app.get('/CargarMapa', (req, res) => {
+  res.json({ apiKey: process.env.API_KEY_MAPS });
+});
 
 
 // Esta madre se descomenta antes de la presentacion loko
@@ -44,7 +49,7 @@ const iniciarApp = async () => {
 
   try {
     console.log("Llamando a Python...");
-    
+
     // ELIMINA EL 'await'. Solo llama a la función.
     // Esto permite que Node siga ejecutando el resto del código sin esperar.
     ejecutarScriptPython()
