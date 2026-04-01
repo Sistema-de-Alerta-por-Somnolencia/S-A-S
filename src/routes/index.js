@@ -24,6 +24,7 @@ router.use('/admin', adminRouter);
 router.use('/choferes', verificarSesionAPI, choferesRoutes);
 router.use('/flota', verificarSesionAPI, flotaRoutes);
 router.use('/alertas', verificarSesionAPI, alertasRoutes);
+router.use('/unidades', verificarSesionAPI, flotaRoutes); // Ruta adicional para obtener solo unidades sin detalles de choferes
 
 
 export default router;
