@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
 </head>
+
 <body>
 
-   <aside class="sidebar">
+    <aside class="sidebar">
         <div class="sidebar-header">
             <h2>Interfaz <span>Logística</span></h2>
         </div>
@@ -18,7 +20,7 @@
             <li><a href="/principal"><i class="fas fa-home"></i> Inicio</a></li>
             <li class="active"><a href="/unidades"><i class="fas fa-truck"></i> Unidades</a></li>
             <li><a href="/choferes"><i class="fas fa-users"></i> Choferes</a></li>
-            <li><a href="#"><i class="fas fa-map-marked-alt"></i> Mapa en vivo</a></li>
+            <li><a href="/MapaEnVivo"><i class="fas fa-map-marked-alt"></i> Mapa en vivo</a></li>
             <li><a href="#"><i class="fas fa-exclamation-triangle"></i> Alertas</a></li>
             <li><a href="#"><i class="fas fa-tools"></i> Mantenimiento</a></li>
         </ul>
@@ -39,33 +41,39 @@
                 <h3 id="form-title"><i class="fas fa-plus-circle"></i> Registrar Nueva Unidad</h3>
                 <form id="formRegistroUnidad" class="dashboard-form">
                     <input type="hidden" id="u_id">
-                    
-                    <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+
+                    <div class="form-grid"
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
                         <div class="input-group">
                             <label for="u_placa">Placa (ID Económico)</label>
-                            <input type="text" id="u_placa" placeholder="ABC1234" maxlength="7" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                            <input type="text" id="u_placa" placeholder="ABC1234" maxlength="7" required
+                                style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                         </div>
-                        
+
                         <div class="input-group">
                             <label for="u_marca_select">Marca</label>
-                            <select id="u_marca_select" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                            <select id="u_marca_select" required
+                                style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                                 <option value="">Cargando marcas...</option>
                             </select>
                         </div>
 
                         <div class="input-group">
                             <label for="u_modelo_select">Modelo</label>
-                            <select id="u_modelo_select" required disabled style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                            <select id="u_modelo_select" required disabled
+                                style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                                 <option value="">Seleccione una marca primero</option>
                             </select>
                         </div>
                     </div>
-                    
+
                     <div style="margin-top: 20px; display: flex; gap: 10px;">
-                        <button type="submit" id="btn-guardar" class="btn-primary" style="padding: 12px 25px; background: var(--accent-blue); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                        <button type="submit" id="btn-guardar" class="btn-primary"
+                            style="padding: 12px 25px; background: var(--accent-blue); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
                             <i class="fas fa-save"></i> Guardar Unidad
                         </button>
-                        <button type="button" id="btn-cancelar" style="display: none; padding: 12px 25px; background: #95a5a6; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                        <button type="button" id="btn-cancelar"
+                            style="display: none; padding: 12px 25px; background: #95a5a6; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
                             Cancelar Edición
                         </button>
                     </div>
@@ -91,17 +99,23 @@
             </div>
         </section>
 
-        <div class="config-container" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
-            
+        <div class="config-container"
+            style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px;">
+
             <section class="panel">
                 <h3><i class="fas fa-copyright"></i> Añadir Marca</h3>
                 <form id="formMarca" style="display: flex; gap: 10px; margin-bottom: 15px;">
-                    <input type="text" id="m_nombre" placeholder="Ej. Kenworth" required style="flex:1; padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                    <input type="text" id="m_nombre" placeholder="Ej. Kenworth" required
+                        style="flex:1; padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                     <button type="submit" class="btn-primary" style="padding: 8px 15px;">Añadir</button>
                 </form>
                 <div class="table-container" style="max-height: 200px; overflow-y: auto;">
                     <table style="font-size: 0.85em;">
-                        <thead><tr><th>Marca</th></tr></thead>
+                        <thead>
+                            <tr>
+                                <th>Marca</th>
+                            </tr>
+                        </thead>
                         <tbody id="tablaMarcas"></tbody>
                     </table>
                 </div>
@@ -110,17 +124,24 @@
             <section class="panel">
                 <h3><i class="fas fa-tags"></i> Añadir Modelo</h3>
                 <form id="formModelo" style="display: grid; gap: 10px; margin-bottom: 15px;">
-                    <select id="mod_id_marca" required style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                    <select id="mod_id_marca" required
+                        style="padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                         <option value="">Seleccione Marca...</option>
                     </select>
                     <div style="display: flex; gap: 10px;">
-                        <input type="text" id="mod_nombre" placeholder="Ej. T680" required style="flex:1; padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                        <input type="text" id="mod_nombre" placeholder="Ej. T680" required
+                            style="flex:1; padding: 8px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                         <button type="submit" class="btn-primary" style="padding: 8px 15px;">Añadir</button>
                     </div>
                 </form>
                 <div class="table-container" style="max-height: 200px; overflow-y: auto;">
                     <table style="font-size: 0.85em;">
-                        <thead><tr><th>Modelo</th><th>Marca</th></tr></thead>
+                        <thead>
+                            <tr>
+                                <th>Modelo</th>
+                                <th>Marca</th>
+                            </tr>
+                        </thead>
                         <tbody id="tablaModelos"></tbody>
                     </table>
                 </div>
@@ -134,7 +155,7 @@
         const themeBtn = document.getElementById('theme-btn');
         const htmlElement = document.documentElement;
         const savedTheme = localStorage.getItem('theme') || 'light';
-        
+
         htmlElement.setAttribute('data-theme', savedTheme);
         actualizarBoton(savedTheme);
 
@@ -147,10 +168,11 @@
         });
 
         function actualizarBoton(theme) {
-            themeBtn.innerHTML = theme === 'dark' 
-                ? '<i class="fas fa-sun"></i> Modo Día' 
+            themeBtn.innerHTML = theme === 'dark'
+                ? '<i class="fas fa-sun"></i> Modo Día'
                 : '<i class="fas fa-moon"></i> Modo Noche';
         }
     </script>
 </body>
+
 </html>

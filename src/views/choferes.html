@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es" data-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,9 +9,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script>document.documentElement.setAttribute('data-theme', localStorage.getItem('theme') || 'light');</script>
 </head>
+
 <body>
 
-   <aside class="sidebar">
+    <aside class="sidebar">
         <div class="sidebar-header">
             <h2>Interfaz <span>Logística</span></h2>
         </div>
@@ -18,7 +20,7 @@
             <li><a href="/principal"><i class="fas fa-home"></i> Inicio</a></li>
             <li><a href="/unidades"><i class="fas fa-truck"></i> Unidades</a></li>
             <li class="active"><a href="/choferes"><i class="fas fa-users"></i> Choferes</a></li>
-            <li><a href="#"><i class="fas fa-map-marked-alt"></i> Mapa en vivo</a></li>
+            <li><a href="/MapaEnVivo"><i class="fas fa-map-marked-alt"></i> Mapa en vivo</a></li>
             <li><a href="#"><i class="fas fa-exclamation-triangle"></i> Alertas</a></li>
             <li><a href="#"><i class="fas fa-tools"></i> Mantenimiento</a></li>
         </ul>
@@ -38,37 +40,46 @@
             <div class="panel">
                 <h3 id="form-title"><i class="fas fa-user-plus"></i> Registrar Nuevo Chofer</h3>
                 <form id="formRegistroChofer" class="dashboard-form">
-                    <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
+                    <div class="form-grid"
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
                         <div class="input-group">
                             <label for="c_nombre">Nombre(s)</label>
-                            <input type="text" id="c_nombre" placeholder="Ej. Juan" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                            <input type="text" id="c_nombre" placeholder="Ej. Juan" required
+                                style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                         </div>
                         <div class="input-group">
                             <label for="c_paterno">Apellido Paterno</label>
-                            <input type="text" id="c_paterno" placeholder="Ej. Pérez" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                            <input type="text" id="c_paterno" placeholder="Ej. Pérez" required
+                                style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                         </div>
                         <div class="input-group">
                             <label for="c_materno">Apellido Materno</label>
-                            <input type="text" id="c_materno" placeholder="Ej. Lopez" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                            <input type="text" id="c_materno" placeholder="Ej. Lopez"
+                                style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                         </div>
                         <div class="input-group">
                             <label for="c_licencia">Licencia</label>
-                            <input type="text" id="c_licencia" placeholder="ABC12345" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                            <input type="text" id="c_licencia" placeholder="ABC12345" required
+                                style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                         </div>
                         <div class="input-group">
                             <label for="c_telefono">Teléfono</label>
-                            <input type="tel" id="c_telefono" placeholder="5512345678" maxlength="10" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                            <input type="tel" id="c_telefono" placeholder="5512345678" maxlength="10"
+                                style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                         </div>
                         <div class="input-group">
                             <label for="c_email">Correo</label>
-                            <input type="email" id="c_email" placeholder="juan@correo.com" required style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
+                            <input type="email" id="c_email" placeholder="juan@correo.com" required
+                                style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                         </div>
                     </div>
                     <div style="display: flex; gap: 10px; margin-top: 20px;">
-                        <button type="submit" id="btnSubmit" class="btn-primary" style="padding: 12px 25px; background: var(--accent-blue); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                        <button type="submit" id="btnSubmit" class="btn-primary"
+                            style="padding: 12px 25px; background: var(--accent-blue); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
                             <i class="fas fa-save"></i> Guardar en Base de Datos
                         </button>
-                        <button type="button" id="btnCancelar" onclick="cancelarEdicion()" style="display: none; padding: 12px 25px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                        <button type="button" id="btnCancelar" onclick="cancelarEdicion()"
+                            style="display: none; padding: 12px 25px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
                             Cancelar
                         </button>
                     </div>
@@ -85,7 +96,7 @@
                             <tr>
                                 <th>Nombre Completo</th>
                                 <th>Licencia</th>
-                                <th>Teléfono</th> 
+                                <th>Teléfono</th>
                                 <th>Email</th>
                                 <th>Acciones</th>
                             </tr>
@@ -100,28 +111,29 @@
     <script src="/js/choferes_logic.js"></script>
 
     <script>
-    const themeBtn = document.getElementById('theme-btn');
-    const htmlElement = document.documentElement;
+        const themeBtn = document.getElementById('theme-btn');
+        const htmlElement = document.documentElement;
 
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    htmlElement.setAttribute('data-theme', savedTheme);
-    actualizarBoton(savedTheme);
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        htmlElement.setAttribute('data-theme', savedTheme);
+        actualizarBoton(savedTheme);
 
-    themeBtn.addEventListener('click', () => {
-        const currentTheme = htmlElement.getAttribute('data-theme');
-        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        htmlElement.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
-        actualizarBoton(newTheme);
-    });
+        themeBtn.addEventListener('click', () => {
+            const currentTheme = htmlElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            htmlElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            actualizarBoton(newTheme);
+        });
 
-    function actualizarBoton(theme) {
-        if (theme === 'dark') {
-            themeBtn.innerHTML = '<i class="fas fa-sun"></i> Modo Día';
-        } else {
-            themeBtn.innerHTML = '<i class="fas fa-moon"></i> Modo Noche';
+        function actualizarBoton(theme) {
+            if (theme === 'dark') {
+                themeBtn.innerHTML = '<i class="fas fa-sun"></i> Modo Día';
+            } else {
+                themeBtn.innerHTML = '<i class="fas fa-moon"></i> Modo Noche';
+            }
         }
-    }
-</script>
+    </script>
 </body>
+
 </html>
