@@ -7,6 +7,9 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 import { verificarSesionHTML } from './middlewares/authMiddleware.js';
 
 
