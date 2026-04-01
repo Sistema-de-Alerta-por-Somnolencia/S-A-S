@@ -37,7 +37,7 @@ import apiRoutes from './routes/index.js';
 import viewRoutes from './routes/viewRoutes.js';
 
 // con esto se sirve la llave de maps con seguridad
-app.get('/CargarMapa', (req, res) => {
+app.get('/Cargarq', (req, res) => {
   res.json({ apiKey: process.env.API_KEY_MAPS });
 });
 
