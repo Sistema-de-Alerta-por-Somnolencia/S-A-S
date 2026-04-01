@@ -31,9 +31,12 @@ router.get('/principal', verificarSesionHTML, (req, res) => {
 router.get('/choferes', verificarSesionHTML, (req, res) => {
     res.sendFile(path.join(viewsPath, 'choferes.html'));
 });
+
 router.get('/MapaEnvivo', verificarSesionHTML, (req, res) => {
     res.sendFile(path.join(viewsPath, 'MapaEnVivo.html'));
 });
+
+
 
 // Si después agregas 'flota.html', solo lo metes aquí
 // router.get('/flota', verificarSesionHTML, ...);
