@@ -92,6 +92,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 
+// ahora si eta madre lo llamada seguramente
+app.get('/principal', verificarSesionHTML, (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'principal.html'));
+});
+
+
+
+
+// ahora si eta madre lo llamada seguramente
+app.get('/principal', verificarSesionHTML, (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'principal.html'));
+});
+
+// Solo necesitas definir la ruta raíz ('/') manualmente
+app.get(['/', '/cuentaexistente'], (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'cuentaExistente.html'));
+});
+app.get('/newcuenta', (req, res) => {
+  res.sendFile(path.join(__dirname, 'views', 'newCuenta.html'));
+});
+
 
 // esta es la api para el maps
 app.get('/api/camiones', (req, res) => {
