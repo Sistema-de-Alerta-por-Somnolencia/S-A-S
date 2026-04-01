@@ -1,12 +1,6 @@
 import os
 import logging
-
-# 1. SILENCIADO TOTAL DE LOGS (Evita spam en terminal)
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
-os.environ['ABSL_LOGGING_LEVEL'] = 'error' 
-os.environ['QT_LOGGING_RULES'] = 'qt.qpa.*=false;*.debug=false'
-os.environ['OPENCV_VIDEOIO_PRIORITY_MSMF'] = '0' 
-
+import platform  # Para detectar el sistema operativo
 import cv2
 import mediapipe as mp
 import numpy as np
@@ -16,6 +10,25 @@ import threading
 
 from alertaFunction import hacer_sonar_alarma, enviar_json_camiones
 from correo import enviar_correos_dinamicos
+
+# --- DETECCIÓN AUTOMÁTICA DE SISTEMA ---
+sistema_operativo = platform.system()
+
+# 1. SILENCIADO TOTAL DE LOGS (Evita spam en terminal)
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' 
+os.environ['ABSL_LOGGING_LEVEL'] = 'error' 
+os.environ['QT_LOGGING_RULES'] = 'qt.qpa.*=false;*.debug=false'
+
+# Solo aplicar prioridad MSMF si es Windows
+if sistema_operativo == "Windows":
+    os.environ['OPENCV_VIDEOIO_PRIORITY_MSMF'] = '0' 
+
+import cv2
+import mediapipe as mp
+import numpy as np
+from mediapipe.framework.formats import landmark_pb2
+import time 
+import threading
 
 # Acceder a solutions via mp.solutions
 mp_drawing = mp.solutions.drawing_utils  
@@ -61,14 +74,19 @@ def main():
     TIEMPO_LIMITE_SEGUNDOS = 3.0
     alerta_ya_enviada = False
     
-    # 2. INICIALIZAR CÁMARA CON BACKEND V4L2 PARA LINUX
-    cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
+    # 2. INICIALIZAR CÁMARA CON DETECCIÓN AUTOMÁTICA DE BACKEND
+    if sistema_operativo == "Linux":
+        cap = cv2.VideoCapture(0, cv2.CAP_V4L2)
+    elif sistema_operativo == "Darwin": # macOS
+        cap = cv2.VideoCapture(0, cv2.CAP_AVFOUNDATION)
+    else: # Windows o genérico
+        cap = cv2.VideoCapture(0)
 
     # 3. CREAR VENTANA UNA SOLA VEZ (Fuera del bucle)
     cv2.namedWindow("Detector de Sueno UAM", cv2.WINDOW_NORMAL)
 
     with FaceLandmarker.create_from_options(options) as landmarker:
-        print("SISTEMA ACTIVO. Presiona 'q' para salir.", flush=True)
+        print(f"SISTEMA ACTIVO ({sistema_operativo}). Presiona 'q' para salir.", flush=True)
 
         while cap.isOpened():
             success, frame = cap.read()
@@ -99,7 +117,7 @@ def main():
                         
                         datos = {
                             "id_unidad": "TRK-001",
-                            "id_tipo_alerta": 1,
+                            "id_tipo_alerta": "Dormido",
                             "chofer": "Erick Alejandro",
                             "latitud": 19.4326, "longitud": -99.1332,
                         }
