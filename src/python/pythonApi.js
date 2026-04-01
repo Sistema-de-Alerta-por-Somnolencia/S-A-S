@@ -7,7 +7,7 @@ export const ejecutarScriptPython = () => {
         const pythonPath = process.env.PYTHON_PATH || 
                            (process.platform === 'win32' ? './venv/Scripts/python.exe' : './.venv/bin/python');
 
-        const scriptPath = './src/python/vision-dormido.py';
+        const scriptPath = './src/python/main_vision.py';
 
         // Log para que veas en consola qué Python está usando realmente
         console.log(`Usando intérprete de Python en: ${pythonPath}`);
