@@ -16,7 +16,7 @@
         </div>
         <ul class="nav-links">
             <li><a href="/principal"><i class="fas fa-home"></i> Inicio</a></li>
-            <li><a href="#"><i class="fas fa-truck"></i> Flota</a></li>
+            <li><a href="/unidades"><i class="fas fa-truck"></i> Unidades</a></li>
             <li class="active"><a href="/choferes"><i class="fas fa-users"></i> Choferes</a></li>
             <li><a href="#"><i class="fas fa-map-marked-alt"></i> Mapa en vivo</a></li>
             <li><a href="#"><i class="fas fa-exclamation-triangle"></i> Alertas</a></li>
@@ -36,7 +36,7 @@
 
         <section class="form-section">
             <div class="panel">
-                <h3><i class="fas fa-user-plus"></i> Registrar Nuevo Chofer</h3>
+                <h3 id="form-title"><i class="fas fa-user-plus"></i> Registrar Nuevo Chofer</h3>
                 <form id="formRegistroChofer" class="dashboard-form">
                     <div class="form-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;">
                         <div class="input-group">
@@ -64,9 +64,14 @@
                             <input type="email" id="c_email" placeholder="juan@correo.com" style="width: 100%; padding: 10px; border-radius: 5px; border: 1px solid var(--border-color); background: var(--bg-main); color: var(--text-main);">
                         </div>
                     </div>
-                    <button type="submit" class="btn-primary" style="margin-top: 20px; padding: 12px 25px; background: var(--accent-blue); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
-                        <i class="fas fa-save"></i> Guardar en Base de Datos
-                    </button>
+                    <div style="display: flex; gap: 10px; margin-top: 20px;">
+                        <button type="submit" id="btnSubmit" class="btn-primary" style="padding: 12px 25px; background: var(--accent-blue); color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                            <i class="fas fa-save"></i> Guardar en Base de Datos
+                        </button>
+                        <button type="button" id="btnCancelar" onclick="cancelarEdicion()" style="display: none; padding: 12px 25px; background: #6c757d; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;">
+                            Cancelar
+                        </button>
+                    </div>
                 </form>
             </div>
         </section>
@@ -80,7 +85,9 @@
                             <tr>
                                 <th>Nombre Completo</th>
                                 <th>Licencia</th>
-                                <th>Teléfono</th> <th>Email</th>
+                                <th>Teléfono</th> 
+                                <th>Email</th>
+                                <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody id="tablaChoferes"></tbody>
@@ -96,28 +103,18 @@
     const themeBtn = document.getElementById('theme-btn');
     const htmlElement = document.documentElement;
 
-    // 1. Al cargar la página: Leer la "memoria" del navegador
     const savedTheme = localStorage.getItem('theme') || 'light';
-    
-    // 2. Aplicar el tema guardado de inmediato
     htmlElement.setAttribute('data-theme', savedTheme);
     actualizarBoton(savedTheme);
 
-    // 3. Escuchar el clic para cambiar y GUARDAR el tema
     themeBtn.addEventListener('click', () => {
         const currentTheme = htmlElement.getAttribute('data-theme');
         const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-        
-        // Aplicar visualmente
         htmlElement.setAttribute('data-theme', newTheme);
-        
-        // Guardar en la libreta del navegador (esto es lo que comparte el color entre páginas)
         localStorage.setItem('theme', newTheme);
-        
         actualizarBoton(newTheme);
     });
 
-    // Función auxiliar para que el texto del botón también coincida
     function actualizarBoton(theme) {
         if (theme === 'dark') {
             themeBtn.innerHTML = '<i class="fas fa-sun"></i> Modo Día';

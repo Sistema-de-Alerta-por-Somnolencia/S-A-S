@@ -4,6 +4,7 @@ import adminRouter from './adminRoutes.js';
 import choferesRoutes from './choferesRoutes.js';
 import flotaRoutes from './flotaRoutes.js';
 import alertasRoutes from './alertasRoutes.js';
+import unidadesRoutes from './unidadesRoutes.js';
 
 
 
@@ -24,6 +25,7 @@ router.use('/admin', adminRouter);
 router.use('/choferes', verificarSesionAPI, choferesRoutes);
 router.use('/flota', verificarSesionAPI, flotaRoutes);
 router.use('/alertas', verificarSesionAPI, alertasRoutes);
+router.use('/unidades', unidadesRoutes);
 
 
 export default router;

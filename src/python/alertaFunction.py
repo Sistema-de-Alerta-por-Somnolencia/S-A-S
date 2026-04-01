@@ -20,7 +20,7 @@ def hacer_sonar_alarma(archivo_wav):
         elif sistema == "Linux":  # Linux / Docker
             subprocess.Popen(["aplay", archivo_wav])
         else:
-            print(f"Sistema {sistema} no soportado para audio nativo.")
+            print(f"Sistema {sistema} no soportado para audio nativo.", flush=True)
 
     except Exception as e:
         print(f"Silencio en la sala, error de audio: {e}")

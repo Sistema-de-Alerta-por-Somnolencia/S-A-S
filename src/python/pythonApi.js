@@ -3,15 +3,23 @@ import { spawn } from 'child_process';
 export const ejecutarScriptPython = () => {
     return new Promise((resolve, reject) => {
 
-        //  Detectamos si es Windows
-        const isWindows = process.platform === 'win32';
-
-        // Asignamos la ruta dependiendo del sistema operativo
-        const pythonPath = isWindows ? './venv/Scripts/python.exe' : './.venv/bin/python';
+        // 1. Priorizamos la ruta del .env, si no, usamos la lógica por defecto
+        const pythonPath = process.env.PYTHON_PATH || 
+                           (process.platform === 'win32' ? './venv/Scripts/python.exe' : './.venv/bin/python');
 
         const scriptPath = './src/python/vision-dormido.py';
 
-        const pythonProcess = spawn(pythonPath, [scriptPath]);
+        // Log para que veas en consola qué Python está usando realmente
+        console.log(`Usando intérprete de Python en: ${pythonPath}`);
+
+        const pythonProcess = spawn(pythonPath, [scriptPath], {
+            env: { 
+                ...process.env,
+                DISPLAY: process.env.DISPLAY || ':0', // Fuerza a Python a buscar tu monitor
+                PYTHONUNBUFFERED: '1' // Ayuda a que los logs lleguen en tiempo real
+            }
+        });
+        
         let resultado = '';
 
         pythonProcess.stdout.on('data', (data) => {

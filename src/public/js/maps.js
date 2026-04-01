@@ -47,7 +47,11 @@ async function initMap() {
 }
 
 // Le pedimos la llave a nuestro propio servidor Node
+<<<<<<< HEAD
 fetch('/api/config/maps')
+=======
+fetch('/CargarMapa')
+>>>>>>> fix_linux
     .then(response => response.json())
     .then(data => {
         // Creamos la etiqueta <script> dinámicamente

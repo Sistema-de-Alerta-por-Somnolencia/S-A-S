@@ -7,6 +7,9 @@ import session from 'express-session';
 import dotenv from 'dotenv';
 dotenv.config();
 
+import dotenv from 'dotenv';
+dotenv.config();
+
 import { verificarSesionHTML } from './middlewares/authMiddleware.js';
 
 
@@ -35,7 +38,7 @@ import apiRoutes from './routes/index.js';
 import viewRoutes from './routes/viewRoutes.js';
 
 // con esto se sirve la llave de maps con seguridad
-app.get('/api/config/maps', (req, res) => {
+app.get('/CargarMapa', (req, res) => {
   res.json({ apiKey: process.env.API_KEY_MAPS });
 });
 
@@ -49,12 +52,14 @@ const iniciarApp = async () => {
 
   try {
     console.log("Llamando a Python...");
-    // Esperamos a que Python termine y nos devuelva el texto
-    const respuestaPython = await ejecutarScriptPython();
 
-    console.log("¡Éxito! Python dice:", respuestaPython);
+    // ELIMINA EL 'await'. Solo llama a la función.
+    // Esto permite que Node siga ejecutando el resto del código sin esperar.
+    ejecutarScriptPython()
+      .then(res => console.log("Python terminó:", res))
+      .catch(err => console.error("Error en Python:", err));
 
-    // Aqui mandamos respuesta al dom
+    console.log("¡Cámara iniciada de fondo!");
 
   } catch (error) {
     console.error("Hubo un problema al ejecutar Python:", error);
