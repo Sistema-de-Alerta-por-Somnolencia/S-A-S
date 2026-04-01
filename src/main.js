@@ -41,7 +41,7 @@ app.get('/CargarMapa', (req, res) => {
 
 
 // Esta madre se descomenta antes de la presentacion loko
-/*
+
 
 
 const iniciarApp = async () => {
@@ -49,7 +49,7 @@ const iniciarApp = async () => {
 
   try {
     console.log("Llamando a Python...");
-    
+
     // ELIMINA EL 'await'. Solo llama a la función.
     // Esto permite que Node siga ejecutando el resto del código sin esperar.
     ejecutarScriptPython()
@@ -64,7 +64,7 @@ const iniciarApp = async () => {
 };
 
 iniciarApp();
-*/
+
 
 // NUEVO (Diego): Habilita CORS (permite que el frontend acceda a la API)
 app.use(cors());
